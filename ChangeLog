@@ -1,3 +1,26 @@
+2001-10-25 12:13  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, configure.in: New release 0.4.
+
+2001-10-25 12:12  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Add code to compile even if getopt_long() is missing.
+
+2001-10-25 12:03  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* elf.c: Fix typo in big endian define test.  Avoid alignment
+	problem on sparc by using memcmp instead of casting.  Patch from
+	David Hull.
+
+2001-10-25 12:00  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* chrpath.c, killrpath.c: Include <link.h>.  Fixes compile problem
+	on Solaris/SPARC.
+
+2001-10-25 11:55  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* README: Corrected link to elfhach.
+
 2001-10-16 09:16  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS, configure.in: New release v0.3
