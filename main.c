@@ -79,9 +79,11 @@ main(int argc, char * const argv[])
     opt = GETOPT_LONG(argc, argv, "cdlr:v", long_options, &option_index);
     switch (opt)
       {
+#if defined(DT_RUNPATH)
       case 'c':
         convert = 1;
         break;
+#endif /* DT_RUNPATH */
       case 'd':
         remove = 1;
         break;
