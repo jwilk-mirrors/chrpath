@@ -1,2 +1,7 @@
 Makefile
 Makefile.in
+chrpath
+chrpath.postinst.debhelper
+chrpath.prerm.debhelper
+chrpath.substvars
+files
