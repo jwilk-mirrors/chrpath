@@ -1,3 +1,8 @@
+New in 0.3 released 2001-10-16:
+
+ * Fix typo in ELF header reading.
+ * Get rid of some compiler warnings.
+
 New in 0.2 released 2001-10-12:
 
  * Fixed some typos in option parsing.
