@@ -1,6 +1,10 @@
 CHRPATH = ../chrpath
 
-RPATH = $(LDRPATH)/usr/local/lib
+ifeq ($(LDRPATH),)
+  RPATH =
+else
+  RPATH = $(LDRPATH)/usr/local/lib
+endif
 
 noinst_PROGRAMS = prog
 
