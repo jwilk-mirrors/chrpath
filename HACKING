@@ -1,0 +1,4 @@
+If you use the CVS version, you need to run the following commands to
+get compilable source:
+
+  aclocal; autoheader; automake -a; autoconf

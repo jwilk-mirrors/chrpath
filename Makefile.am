@@ -1,4 +1,4 @@
-SUBDIRS = debian
+SUBDIRS = deb
 
 docdir = $(prefix)/doc/$(PACKAGE)-$(VERSION)
 
