@@ -1,3 +1,7 @@
+New in 0.14 released 2005-XX-XX:
+ * Updated debian build rules from the current Debian package.
+ * Applied patch from debian to support Hurd and k*BSD.
+
 New in 0.13 released 2004-09-19:
  * Change exit code handling.  Return an error if the operation fail.
  * New argument -k (--keepgoing) to not stop on first error.
