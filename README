@@ -8,3 +8,9 @@ missing.
 
 This tool is based on two small programs I found on the GCC mailing
 list.
+
+Similar tools:
+--------------
+
+There is elfhack by Ric Klaren doing almost the same thing, and a bit
+more.  <URL:http://www.stud.uni-hannover.de/~michael/software/>
