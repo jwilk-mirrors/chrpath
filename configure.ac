@@ -1,7 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(chrpath.c)
 
+AC_INIT("chrpath", "0.10", pere@hungry.com)
 AM_INIT_AUTOMAKE("chrpath", "0.10")
+
+AC_CONFIG_SRCDIR(chrpath.c)
 AM_CONFIG_HEADER(config.h)
 
 dnl Checks for programs.
@@ -12,7 +14,7 @@ dnl Checks for libraries.
 
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(getopt.h elf.h fcntl.h unistd.h link.h sys/link.h)
+AC_CHECK_HEADERS([getopt.h elf.h fcntl.h unistd.h link.h sys/link.h])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -39,10 +41,11 @@ if eval "test x$GCC = xyes"; then
   done
 fi
 
-AC_OUTPUT(\
-	Makefile \
-	deb/Makefile \
-	)
+AC_CONFIG_FILES([
+        Makefile \
+        deb/Makefile \
+        ])
+AC_OUTPUT
 
 if test ! -d debian ; then
     ln -s deb debian
