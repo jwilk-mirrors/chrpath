@@ -1,4 +1,4 @@
-New in 0.7 released 200X-XX-XX:
+New in 0.7 released 2002-08-01:
  * Fixed small memleak.
  * Fixed crash bug on Solaris, when reading unknown/broken formats.
  * Fix typos in manpage (s/--remove/--replace/ and some s/ rpath/ chrpath/).
