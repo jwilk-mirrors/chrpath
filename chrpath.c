@@ -100,6 +100,7 @@ chrpath(const char *filename, const char *newpath)
       || read(fd, dyns, phdr.p_filesz) != (int)phdr.p_filesz)
     {
       perror ("reading dynamic section");
+      free(dyns);
       return 1;
     }
 
@@ -112,6 +113,8 @@ chrpath(const char *filename, const char *newpath)
          break;
       }
     }
+  free(dyns);
+  dyns = NULL;
   if (rpathoff == -1)
     {
       printf("%s: no rpath tag found.\n", filename);
@@ -150,24 +153,30 @@ chrpath(const char *filename, const char *newpath)
   if (lseek(fd, shdr.sh_offset, SEEK_SET) == -1)
   {
     perror ("positioning for string table");
+    free(strtab);
     return 1;
   }
   if (read(fd, strtab, shdr.sh_size) != (int)shdr.sh_size)
   {
     perror ("reading string table");
+    free(strtab);
     return 1;
   }
 
   if ((int)shdr.sh_size < rpathoff)
   {
-     fprintf(stderr, "RPATH string offset not contained in string table");
-     return 5;
+    fprintf(stderr, "RPATH string offset not contained in string table");
+    free(strtab);
+    return 5;
   }
   rpath = strtab+rpathoff;
   printf("%s: RPATH=%s\n", filename, rpath);
 
   if (NULL == newpath)
-     return 0;
+  {
+    free(strtab);
+    return 0;
+  }
 
   rpathlen = strlen(rpath);
 
@@ -185,9 +194,10 @@ chrpath(const char *filename, const char *newpath)
 
   if (strlen(newpath) > rpathlen)
   {
-     fprintf(stderr, "new rpath '%s' too large; maximum length %i\n",
-             newpath, rpathlen);
-     return 7;
+    fprintf(stderr, "new rpath '%s' too large; maximum length %i\n",
+            newpath, rpathlen);
+    free(strtab);
+    return 7;
   }
 
   memset(rpath, 0, rpathlen);
@@ -196,16 +206,20 @@ chrpath(const char *filename, const char *newpath)
   if (lseek(fd, shdr.sh_offset+rpathoff, SEEK_SET) == -1)
   {
     perror ("positioning for RPATH");
+    free(strtab);
     return 1;
   }
   if (write(fd, rpath, rpathlen) != (int)rpathlen)
   {
     perror ("writing RPATH");
+    free(strtab);
     return 1;
   }
   printf("%s:new RPATH: %s\n", filename, rpath);
 
   elf_close(fd);
+
+  free(strtab);
 
   return 0;
 }
