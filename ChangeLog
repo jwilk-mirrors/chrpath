@@ -1,3 +1,31 @@
+2001-11-03 18:12  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, configure.in: New release 0.5.
+
+2001-10-26 16:08  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Prosess all programs listed on the command line, instead
+	of only the first.
+
+2001-10-26 16:05  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* chrpath.c: Report filename when no rpath tag is found.
+
+2001-10-26 12:58  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS: Started on 0.5 release info.
+
+2001-10-26 12:41  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* AUTHORS, configure.in, main.c: Fixes for compile without
+	getopt_long().	Hopefully this should work on Solaris now.  Patch
+	from Thomas Anders.
+
+2001-10-25 12:38  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Add option -l (list) to make it more obvious how to list
+	the current rpath setting.
+
 2001-10-25 12:13  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS, configure.in: New release 0.4.
