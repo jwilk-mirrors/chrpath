@@ -114,7 +114,7 @@ chrpath(const char *filename, const char *newpath)
     }
   if (rpathoff == -1)
     {
-      fprintf (stderr, "No rpath tag found.\n");
+      printf("%s: no rpath tag found.\n", filename);
       return 2;
     }
 
