@@ -198,11 +198,10 @@ chrpath(const char *filename, const char *newpath, int convert)
 
   printf("%s: %s=%s\n", filename, elf_tagname(dyns[rpath_dyns_index].d_tag),
          rpath);
-  free(dyns);
-  dyns = NULL;
 
   if (NULL == newpath)
   {
+    free(dyns);
     free(strtab);
     return 0;
   }
@@ -225,6 +224,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   {
     fprintf(stderr, "new rpath '%s' too large; maximum length %i\n",
             newpath, rpathlen);
+    free(dyns);
     free(strtab);
     return 7;
   }
@@ -235,12 +235,14 @@ chrpath(const char *filename, const char *newpath, int convert)
   if (lseek(fd, shdr.sh_offset+rpathoff, SEEK_SET) == -1)
   {
     perror ("positioning for RPATH");
+    free(dyns);
     free(strtab);
     return 1;
   }
   if (write(fd, rpath, rpathlen) != (int)rpathlen)
   {
     perror ("writing RPATH");
+    free(dyns);
     free(strtab);
     return 1;
   }
@@ -248,6 +250,9 @@ chrpath(const char *filename, const char *newpath, int convert)
          elf_tagname(dyns[rpath_dyns_index].d_tag), rpath);
 
   elf_close(fd);
+
+  free(dyns);
+  dyns = NULL;
 
   free(strtab);
 
