@@ -1,3 +1,30 @@
+chrpath (0.13-1) unstable; urgency=low
+
+  * New upstream release
+  * Rerun aclocal, automake, autoconf since upstream seemingly used broken
+    versions.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 21 Sep 2004 09:37:14 +0200
+
+chrpath (0.12-3) unstable; urgency=low
+
+  * Add AM_MAINTAINER_MODE support to configure.ac (closes: #259492)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 15 Jul 2004 09:25:52 +0200
+
+chrpath (0.12-2) unstable; urgency=low
+
+  * Fix Hurd and k*BSD support (closes: #248084)
+  * Remove call to dh_undocumented.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 10 Jun 2004 02:47:34 +0200
+
+chrpath (0.12-1) unstable; urgency=low
+
+  * New upstream release (closes: #211094)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 23 Dec 2003 12:38:50 +0100
+
 chrpath (0.10-2) unstable; urgency=low
 
   * Fix description (closes:  #179923).
