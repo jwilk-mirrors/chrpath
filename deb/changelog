@@ -1,3 +1,17 @@
+chrpath (0.10-2) unstable; urgency=low
+
+  * Fix description (closes:  #179923).
+  * Make chrpath work well on 64 bit arches. (closes: #197210)
+  * Make build also run make check
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 17 Jun 2003 00:18:37 +0200
+
+chrpath (0.10-1) unstable; urgency=low
+
+  * New upstream release (closes: #171256)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  4 Jan 2003 00:26:41 +0100
+
 chrpath (0.9-2) unstable; urgency=low
 
   * Remove ugliness due to patch applying twice.
