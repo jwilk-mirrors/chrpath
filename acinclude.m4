@@ -32,6 +32,10 @@ case "$target" in
 		# Hm, this seem to set runpath on ia64, not rpath
 		LDRPATH="-Wl,+b,"
 		;;
+	*-*-darwin*)
+		# No idea how to add rpath/runpath on Darwin
+		LDRPATH=""
+		;;
 	*)
 		LDRPATH="-R "
 		;;
