@@ -29,6 +29,6 @@ EXTRA_DIST = ChangeLog.usermap $(man_MANS)
 # --usermap ...          Make usernames with names/emails in given file
 # --ignore ChangeLog     Don't log changes to the ChangeLog itself
 CVS2CL = cvs2cl
-ChangeLog: ChangeLog.usermap
+log: ChangeLog.usermap
 	$(CVS2CL) -b --gmt --log-opts "-d'2001-01-01< now'" --window 7200 \
-		--usermap ChangeLog.usermap --ignore ChangeLog -f $@
+		--usermap ChangeLog.usermap --ignore ChangeLog -f ChangeLog
