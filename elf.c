@@ -105,3 +105,29 @@ elf_close(int fd)
 {
   close(fd);
 }
+
+const char *
+elf_tagname(int tag)
+{
+  switch (tag) {
+  case DT_RPATH:
+    return "RPATH";
+    break;
+#if defined(DT_RUNPATH)
+  case DT_RUNPATH:
+    return "RUNPATH";
+    break;
+#endif /* DT_RUNPATH */
+  }
+  return "UNKNOWN";
+}
+
+int
+elf_dynpath_tag(int tag)
+{
+  return ( tag == DT_RPATH
+#if defined(DT_RUNPATH)
+           || tag == DT_RUNPATH
+#endif /* DT_RUNPATH */
+           );
+}

@@ -1,4 +1,5 @@
 New in 0.8 released 2002-XX-XX:
+ * Handle platforms without runpath support (ie missing DT_RUNPATH).
 
 New in 0.7 released 2002-08-01:
  * Fixed small memleak.

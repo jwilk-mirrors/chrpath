@@ -109,8 +109,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   for ( rpath_dyns_index = 0; dyns[rpath_dyns_index].d_tag != DT_NULL;
         ++rpath_dyns_index )
     {
-      if (dyns[rpath_dyns_index].d_tag == DT_RPATH
-          || dyns[rpath_dyns_index].d_tag == DT_RUNPATH)
+      if ( elf_dynpath_tag(dyns[rpath_dyns_index].d_tag) )
       {
          rpathoff = dyns[rpath_dyns_index].d_un.d_ptr;
          break;
@@ -174,13 +173,14 @@ chrpath(const char *filename, const char *newpath, int convert)
   if ((int)shdr.sh_size < rpathoff)
   {
     fprintf(stderr, "%s string offset not contained in string table",
-            dyns[rpath_dyns_index].d_tag == DT_RPATH ? "RPATH" : "RUNPATH");
+            elf_tagname(dyns[rpath_dyns_index].d_tag));
     free(strtab);
     free(dyns);
     return 5;
   }
   rpath = strtab+rpathoff;
 
+#if defined(DT_RUNPATH)
   if (convert && dyns[rpath_dyns_index].d_tag == DT_RPATH)
   {
     dyns[rpath_dyns_index].d_tag = DT_RUNPATH;
@@ -192,9 +192,10 @@ chrpath(const char *filename, const char *newpath, int convert)
     }
     printf("%s: RPATH converted to RUNPATH\n", filename);
   }
+#endif /* DT_RUNPATH */
 
-  printf("%s: %s=%s\n", filename,
-         dyns[rpath_dyns_index].d_tag == DT_RPATH ? "RPATH" : "RUNPATH", rpath);
+  printf("%s: %s=%s\n", filename, elf_tagname(dyns[rpath_dyns_index].d_tag),
+         rpath);
   free(dyns);
   dyns = NULL;
 
@@ -242,7 +243,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     return 1;
   }
   printf("%s: new %s: %s\n", filename,
-         dyns[rpath_dyns_index].d_tag == DT_RPATH ? "RPATH" : "RUNPATH", rpath);
+         elf_tagname(dyns[rpath_dyns_index].d_tag), rpath);
 
   elf_close(fd);
 

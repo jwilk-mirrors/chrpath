@@ -43,19 +43,25 @@ usage(char *progname)
          progname);
   printf("   -v|--version                Display program version number\n");
   printf("   -d|--delete                 Delete current rpath/runpath setting\n");
+#if defined(DT_RUNPATH)
   printf("   -c|--convert                Convert rpath to runpath\n");
+#endif /* DT_RUNPATH */
   printf("   -r <path>|--replace <path>  Replace current rpath/runpath setting\n");
   printf("                               with the path given\n");
   printf("   -l|--list                   List the current rpath/runpath (default)\n");
 #ifndef HAVE_GETOPT_LONG
-  printf("\n *** The long options are not available on this platform\n");
+  printf("\n *** The long options are not available on this platform");
 #endif /* not HAVE_GETOPT_LONG */
+#if !defined(DT_RUNPATH)
+  printf("\n *** There is no support for runpath on this platform");
+#endif /* DT_RUNPATH */
+  printf("\n");
 }
 
 int
 main(int argc, char * const argv[])
 {
-  int convert = 0;	/* convert to given type */
+  int convert = 0;      /* convert to given type */
   int remove = 0;       /* remove or not */
   char *newpath = NULL; /* insert this path */
   int opt;
