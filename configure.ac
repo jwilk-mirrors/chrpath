@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT("chrpath", "0.10", pere@hungry.com)
-AM_INIT_AUTOMAKE("chrpath", "0.10")
+AC_INIT("chrpath", "0.11", pere@hungry.com)
+AM_INIT_AUTOMAKE("chrpath", "0.11")
 
 AC_CONFIG_SRCDIR(chrpath.c)
 AM_CONFIG_HEADER(config.h)

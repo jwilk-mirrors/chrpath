@@ -32,10 +32,10 @@ int
 killrpath(const char *filename)
 {
    int fd;
-   Elf32_Ehdr ehdr;
+   Elf_Ehdr ehdr;
    int i;
-   Elf32_Phdr phdr;
-   Elf32_Dyn *dyns;
+   Elf_Phdr phdr;
+   Elf_Dyn *dyns;
    int dynpos;
 
    fd = elf_open(filename, O_RDWR, &ehdr);

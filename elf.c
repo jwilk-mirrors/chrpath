@@ -16,14 +16,8 @@
 #include <fcntl.h>
 #include "protos.h"
 
-#ifdef WORDS_BIGENDIAN
-#define ELFDATA2 ELFDATA2MSB
-#else
-#define ELFDATA2 ELFDATA2LSB
-#endif
-
 int
-elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
+elf_open(const char *filename, int flags, Elf_Ehdr *ehdr)
 {
    int fd;
 
@@ -42,26 +36,26 @@ elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
    }
 
    if (0 != memcmp(ehdr->e_ident, ELFMAG, SELFMAG) ||
-       ehdr->e_ident[EI_CLASS] != ELFCLASS32 ||
+       ehdr->e_ident[EI_CLASS] != ELFCLASS ||
        ehdr->e_ident[EI_DATA] != ELFDATA2 ||
        ehdr->e_ident[EI_VERSION] != EV_CURRENT)
    {
      fprintf(stderr,
 #ifdef WORDS_BIGENDIAN
-             "`%s' probably isn't a 32-bit MSB-first ELF file.\n",
+             "`%s' probably isn't a %d-bit MSB-first ELF file.\n",
 #else /* not WORD_BIGENDIAN */
-             "`%s' probably isn't a 32-bit LSB-first ELF file.\n",
+             "`%s' probably isn't a %d-bit LSB-first ELF file.\n",
 #endif /* not WORD_BIGENDIAN */
-             filename);
+             filename, __WORDSIZE);
      close(fd);
      errno = ENOEXEC; /* Hm, is this the best errno code to use? */
      return -1;
    }
 
-   if (ehdr->e_phentsize != sizeof(Elf32_Phdr))
+   if (ehdr->e_phentsize != sizeof(Elf_Phdr))
    {
      fprintf(stderr, "section size was read as %d, not %d!\n",
-            ehdr->e_phentsize, sizeof(Elf32_Phdr));
+            ehdr->e_phentsize, sizeof(Elf_Phdr));
      close(fd);
      return -1;
    }
@@ -69,7 +63,7 @@ elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
 }
 
 int
-elf_find_dynamic_section(int fd, Elf32_Ehdr *ehdr, Elf32_Phdr *phdr)
+elf_find_dynamic_section(int fd, Elf_Ehdr *ehdr, Elf_Phdr *phdr)
 {
   int i;
   if (lseek(fd, ehdr->e_phoff, SEEK_SET) == -1)

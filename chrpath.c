@@ -62,11 +62,11 @@ int
 chrpath(const char *filename, const char *newpath, int convert)
 {
   int fd;
-  Elf32_Ehdr ehdr;
+  Elf_Ehdr ehdr;
   int i;
-  Elf32_Phdr phdr;
-  Elf32_Shdr shdr;
-  Elf32_Dyn *dyns;
+  Elf_Phdr phdr;
+  Elf_Shdr shdr;
+  Elf_Dyn *dyns;
   int rpathoff;
   char * strtab;
   char * rpath;
