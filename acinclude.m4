@@ -22,7 +22,7 @@ esac
 AC_DEFUN(CHRPATH_LDRPATH_OPTION,
 [AC_REQUIRE([AC_CANONICAL_TARGET])[]dnl
 case "$target" in
-	*-linux*)
+	*-linux*|*-gnu*|*-k*bsd*-gnu)
 		LDRPATH=-Wl,-rpath,
 		;;
 	*-*-irix*|*-*-osf*)
