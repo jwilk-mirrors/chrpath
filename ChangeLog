@@ -1,3 +1,29 @@
+2002-10-28 17:05  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, configure.in: New release 0.9
+
+2002-10-28 17:00  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* debian/: changelog, copyright: Update from debian package 0.7-1.
+
+2002-10-28 16:56  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Correct option handling.  Only -r takes a parameter, the
+	rest do not.
+
+2002-09-17 11:07  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Avoid compile warning on platforms without getopt_long().
+
+2002-09-17 11:00  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* chrpath.c, configure.in, killrpath.c: Make <link.h> optional.  It
+	is missing on Irix 6.5.
+
+2002-09-17 07:51  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS: New release 0.8.
+
 2002-09-17 07:49  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* Makefile.am: Change target name for generating new ChangeLog, to
