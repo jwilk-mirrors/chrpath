@@ -46,7 +46,7 @@ elf_open(const char *filename, int flags, Elf_Ehdr *ehdr)
 #else /* not WORD_BIGENDIAN */
              "`%s' probably isn't a %d-bit LSB-first ELF file.\n",
 #endif /* not WORD_BIGENDIAN */
-             filename, __WORDSIZE);
+             filename, SIZEOF_VOID_P * 8);
      close(fd);
      errno = ENOEXEC; /* Hm, is this the best errno code to use? */
      return -1;
