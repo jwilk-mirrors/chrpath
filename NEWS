@@ -1,3 +1,6 @@
+New in 0.6 released ???:
+ * Added debian/ package scripts.
+
 New in 0.5 released 2001-11-03:
  * Compile fixes for platforms without getopt_long().
  * Handle more then one file on one run.
