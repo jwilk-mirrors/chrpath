@@ -71,7 +71,7 @@ elf_find_dynamic_section(int fd, Elf32_Ehdr *ehdr, Elf32_Phdr *phdr)
 
   for (i = 0; i < ehdr->e_phnum; i++)
   {
-    if (read(fd, &phdr, sizeof(phdr)) != sizeof(phdr))
+    if (read(fd, phdr, sizeof(*phdr)) != sizeof(*phdr))
     {
       perror ("reading section header");
       return 1;
