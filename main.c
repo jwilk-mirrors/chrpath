@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <getopt.h>
+#include <stdlib.h>
 #include "protos.h"
 
 static void
