@@ -1,10 +1,36 @@
+2002-11-30 15:12  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS: New release 0.10.
+
+2002-11-30 15:07  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* Makefile.am, configure.ac, testsuite/.cvsignore,
+	testsuite/Makefile.am, testsuite/prog.c, testsuite/runtest.sh: Add
+	simple self test code.
+
+2002-11-30 11:26  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* deb/docs: Include more documentation in debian package.
+
+2002-11-30 11:24  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.ac, configure.in: Convert to newer autoconf.
+
+2002-11-30 11:18  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* HACKING, configure.in, deb/.cvsignore, deb/Makefile.am,
+	deb/changelog, deb/control, deb/copyright, deb/dirs, deb/docs,
+	deb/rules, Makefile.am: Move debian package files from debian/ to
+	deb/.
+
+2002-11-23 21:17  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, chrpath.c, configure.in: Avoid segfaulting when derefering
+	a NULL pointer.
+
 2002-10-28 17:05  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS, configure.in: New release 0.9
-
-2002-10-28 17:00  Petter Reinholdtsen <pere@td.org.uit.no>
-
-	* debian/: changelog, copyright: Update from debian package 0.7-1.
 
 2002-10-28 16:56  Petter Reinholdtsen <pere@td.org.uit.no>
 
@@ -79,12 +105,7 @@
 
 2002-05-25 22:18  Petter Reinholdtsen <pere@td.org.uit.no>
 
-	* .cvsignore, debian/.cvsignore: Ignore generated files.
-
-2002-05-25 22:17  Petter Reinholdtsen <pere@td.org.uit.no>
-
-	* debian/: changelog, copyright, rules: Updated with current info
-	from Debian.
+	* .cvsignore: Ignore generated files.
 
 2002-05-25 22:14  Petter Reinholdtsen <pere@td.org.uit.no>
 
@@ -98,16 +119,6 @@
 
 	* Makefile.am, chrpath.1: Add manual page.  Thanks to Tollef Fog
 	Heen for writing it.
-
-2002-05-05 15:08  Petter Reinholdtsen <pere@td.org.uit.no>
-
-	* debian/: Makefile.am, README.debian: Correct list of files to
-	include, and remove wasted README.debian.
-
-2002-05-05 15:02  Petter Reinholdtsen <pere@td.org.uit.no>
-
-	* debian/: changelog, control, copyright, dirs, docs, rules:
-	Updated with the files used by the current Debian package.
 
 2002-02-13 16:57  Petter Reinholdtsen <pere@td.org.uit.no>
 
@@ -124,10 +135,8 @@
 
 2001-11-03 18:42  Petter Reinholdtsen <pere@td.org.uit.no>
 
-	* Makefile.am, configure.in, debian/.cvsignore, debian/Makefile.am,
-	debian/README.debian, debian/changelog, debian/control,
-	debian/copyright, debian/dirs, debian/rules: New target 'debs' to
-	make debian package.
+	* Makefile.am, configure.in: New target 'debs' to make debian
+	package.
 
 2001-11-03 18:12  Petter Reinholdtsen <pere@td.org.uit.no>
 
