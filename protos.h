@@ -2,6 +2,7 @@
 #define PROTOS_H
 
 #include <elf.h>
+#include "config.h"
 
 #ifdef WORDS_BIGENDIAN
 #define ELFDATA2 ELFDATA2MSB
