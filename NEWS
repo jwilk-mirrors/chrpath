@@ -1,3 +1,7 @@
+New in 0.13 released 2004-09-XX:
+ * Change exit code handling.  Return an error if the operation fail.
+ * New argument -k (--keepgoing) to not stop on first error.
+
 New in 0.12 released 2003-12-12:
  * Use p_filesz instead p_memsz when checking if the elf
    header exist.  This should get it working on Solaris.

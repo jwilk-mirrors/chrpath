@@ -25,11 +25,12 @@
 
 static struct option long_options[] =
 {
-  {"convert", 0, 0, 'c'},
-  {"delete",  0, 0, 'd'},
-  {"list",    0, 0, 'l'},
-  {"replace", 1, 0, 'r'},
-  {"version", 0, 0, 'v'}
+  {"convert",   0, 0, 'c'},
+  {"delete",    0, 0, 'd'},
+  {"keepgoing", 0, 0, 'k'},
+  {"list",      0, 0, 'l'},
+  {"replace",   1, 0, 'r'},
+  {"version",   0, 0, 'v'}
 };
 
 #else /* not HAVE_GETOPT_LONG */
@@ -61,8 +62,10 @@ usage(char *progname)
 int
 main(int argc, char * const argv[])
 {
+  int retval = 0;
   int convert = 0;      /* convert to given type */
   int remove = 0;       /* remove or not */
+  int keep_going = 0;   /* Break on first error, or keep going? */
   char *newpath = NULL; /* insert this path */
   int opt;
 #ifdef HAVE_GETOPT_LONG
@@ -76,7 +79,7 @@ main(int argc, char * const argv[])
     }
 
   do {
-    opt = GETOPT_LONG(argc, argv, "cdlr:v", long_options, &option_index);
+    opt = GETOPT_LONG(argc, argv, "cdklr:v", long_options, &option_index);
     switch (opt)
       {
 #if defined(DT_RUNPATH)
@@ -86,6 +89,9 @@ main(int argc, char * const argv[])
 #endif /* DT_RUNPATH */
       case 'd':
         remove = 1;
+        break;
+      case 'k':
+        keep_going = 1;
         break;
       case 'r':
         newpath = optarg;
@@ -106,14 +112,14 @@ main(int argc, char * const argv[])
       }
   } while (-1 != opt);
 
-  while (optind < argc)
+  while (optind < argc && (!retval || keep_going))
     {
       if (remove)
-        killrpath(argv[optind++]);
+        retval |= killrpath(argv[optind++]);
       else
         /* list by default, replace if path is set */
-        chrpath(argv[optind++], newpath, convert);
+        retval |= chrpath(argv[optind++], newpath, convert);
     }
 
-  return 0;
+  return retval;
 }
