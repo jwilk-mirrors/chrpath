@@ -1,8 +1,13 @@
+SUBDIRS = debian
+
 docdir = $(prefix)/doc/$(PACKAGE)-$(VERSION)
 
 doc_DATA = AUTHORS COPYING ChangeLog INSTALL NEWS README
 
 bin_PROGRAMS = chrpath
+
+debs:
+	fakeroot debian/rules binary
 
 chrpath_SOURCES = \
 	chrpath.c	\

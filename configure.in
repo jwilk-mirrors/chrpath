@@ -39,4 +39,7 @@ if eval "test x$GCC = xyes"; then
   done
 fi
 
-AC_OUTPUT(Makefile)
+AC_OUTPUT(\
+	Makefile \
+	debian/Makefile \
+	)

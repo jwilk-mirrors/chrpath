@@ -1,0 +1,10 @@
+Source: chrpath
+Section: unknown
+Priority: optional
+Maintainer: Petter Reinholdtsen <pere@hungry.com>
+Standards-Version: 3.2.1
+
+Package: chrpath
+Architecture: any
+Description: chrpath allows you to modify the dynamic library load
+  path (rpath) of compiled programs.	
