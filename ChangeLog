@@ -1,3 +1,29 @@
+2002-08-01 16:03  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, configure.in: New release 0.7.
+
+2002-08-01 16:02  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, chrpath.1, chrpath.c, killrpath.c, main.c, protos.h: Add
+	runpath-support.  Patch from Darren Salt.
+
+2002-07-29 12:21  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, chrpath.1: More typos in manpage.
+
+2002-07-29 12:16  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, chrpath.1: Fixed typo.	Patch from Nikita V. Youshchenko.
+
+2002-07-29 12:15  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, elf.c: Fixed crash bug on Solaris, when reading
+	unknown/broken formats.
+
+2002-05-25 22:26  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* README: Add license info.
+
 2002-05-25 22:21  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS: Started on 0.7 news.
