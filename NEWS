@@ -1,5 +1,6 @@
-New in 0.5 released ???:
+New in 0.5 released 2001-11-03:
  * Compile fixes for platforms without getopt_long().
+ * Handle more then one file on one run.
 
 New in 0.4 released 2001-10-25:
 
