@@ -1,3 +1,26 @@
+chrpath (0.9-2) unstable; urgency=low
+
+  * Remove ugliness due to patch applying twice.
+  * Fix loop introduced i 0.7-2.  Thanks to liiwi for noticing this.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat, 23 Nov 2002 21:39:28 +0100
+
+chrpath (0.9-1) unstable; urgency=low
+
+  * New upstream release
+    - Adds support for platforms not having DT_RUNPATH (like NetBSD)
+    (closes: #167169)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat, 23 Nov 2002 21:25:05 +0100
+    
+chrpath (0.7-2) unstable; urgency=low
+ 
+  * Fix segfault when converting rpath to runpath.  (closes: #168670)
+  * Fix --delete weirdness where it wouldn't process the first argument
+    (closes: #163843)
+ 
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 12 Nov 2002 03:18:07 +0100
+ 
 chrpath (0.7-1) unstable; urgency=low
 
   * New upstream release
@@ -24,10 +47,3 @@ chrpath (0.5-1) unstable; urgency=low
   * Initial Release.
 
  -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Feb 2002 04:03:22 +0100
-
-chrpath (0.5-1) unstable; urgency=low
-
-  * Initial Release.
-
- -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Feb 2002 04:03:22 +0100
-
