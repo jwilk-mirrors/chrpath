@@ -1,5 +1,5 @@
-New in 0.11 released 2003-08-XX:
- * Make chrpath work well on 64 bit arches.
+New in 0.11 released 2003-09-15:
+ * Make chrpath work better on 64 bit arches.
  * Try to make the test code more portable (choosing
    -rpath/-R depending on arch).
 

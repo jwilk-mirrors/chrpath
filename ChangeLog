@@ -1,3 +1,31 @@
+2003-09-15 21:01  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* testsuite/runtest.sh: Try to make sure runtest.sh work on all
+	platforms, also the one without runpath and the ones where rpath is
+	unavailable at link time.
+
+2003-09-15 20:58  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* acinclude.m4: Add support for more operating systems.
+
+2003-09-15 20:56  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* elf.c: Avoid one last __WORDSIZE.
+
+2003-09-15 20:55  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Only understand -c options if DT_RUNPATH is known.
+
+2003-07-23 16:08  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, acinclude.m4, configure.ac, testsuite/Makefile.am: Try to
+	make the test code more portable (choosing -rpath/-R depending on
+	arch).
+
+2003-06-24 07:51  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* protos.h: Drop non-standard header file <bits/wordsize.h>.
+
 2003-06-23 23:11  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* configure.ac, protos.h: Avoid non-standard __WORDSIZE.
