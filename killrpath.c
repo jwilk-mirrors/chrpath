@@ -21,6 +21,7 @@ Geoffrey Keating <geoffk@ozemail.com.au>
 #include <elf.h>
 #include <stdlib.h>
 #include "protos.h"
+#include <string.h>
 
 /* Reads an ELF file, nukes all the RPATH entries. */
 
