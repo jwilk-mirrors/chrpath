@@ -21,6 +21,22 @@ AC_C_BIGENDIAN
 dnl Checks for library functions.
 AC_CHECK_FUNCS(getopt_long)
 
-CFLAGS="$CFLAGS -W -Wall"
+if eval "test x$GCC = xyes"; then
+  for flag in \
+      -ansi \
+      -pedantic \
+      -W \
+      -Wall \
+      -Wcast-align \
+      -Wcast-qual \
+      -Wmissing-declarations \
+      -Wmissing-prototypes \
+      -Wpointer-arith \
+      -Wreturn-type \
+      -Wstrict-prototypes 
+  do
+    JAPHAR_GREP_CFLAGS($flag, [ CFLAGS="$CFLAGS $flag" ])
+  done
+fi
 
 AC_OUTPUT(Makefile)
