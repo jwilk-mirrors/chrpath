@@ -1,3 +1,6 @@
+New in 0.5 released ???:
+ * Compile fixes for platforms without getopt_long().
+
 New in 0.4 released 2001-10-25:
 
  * Fixes for SPARC/Solaris.
