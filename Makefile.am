@@ -1,4 +1,4 @@
-SUBDIRS = deb
+SUBDIRS = testsuite deb
 
 docdir = $(prefix)/doc/$(PACKAGE)-$(VERSION)
 

@@ -43,6 +43,7 @@ fi
 
 AC_CONFIG_FILES([
         Makefile \
+        testsuite/Makefile \
         deb/Makefile \
         ])
 AC_OUTPUT
