@@ -1,3 +1,21 @@
+2001-02-28 23:47  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS: Set release date.
+
+2001-01-22 18:24  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* acinclude.m4, configure.in: Add more warning flags when compiling
+	with GNU CC.
+
+2001-01-22 18:23  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* chrpath.c, elf.c, protos.h, killrpath.c: Move common code for
+	finding the ELF dynamic section into separate function.
+
+2001-01-22 18:22  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* Makefile.am: Install documentation.
+
 2001-01-22 08:47  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* .cvsignore, AUTHORS, Makefile.am, NEWS, README, chrpath.c,
