@@ -20,7 +20,7 @@ chrpath_SOURCES = \
 
 EXTRA_DIST = ChangeLog.usermap $(man_MANS)
 
-CLEANFILES = *.bb *.bbg *.da *.gcov
+CLEANFILES = *.bb *.bbg *.da *.gcov testsuite/*.bb testsuite/*.bbg
 coverage: all check
 	for f in *.c; do gcov $$f; done
 

@@ -1,3 +1,21 @@
+2004-09-19 08:37  Petter Reinholdtsen <pere@hungry.com>
+
+	* testsuite/runtest.sh: Improve coverage.
+
+2004-09-19 08:36  Petter Reinholdtsen <pere@hungry.com>
+
+	* chrpath.1, main.c: New option -h (--help) showing usage info.
+
+2004-09-19 08:24  Petter Reinholdtsen <pere@hungry.com>
+
+	* testsuite/runtest.sh: New test to increase test coverage.
+
+2004-09-19 08:19  Petter Reinholdtsen <pere@hungry.com>
+
+	* Makefile.am, configure.ac, main.c, testsuite/runtest.sh: New
+	configure flag --with-coverage and new makefile target 'coverage'
+	to run coverage testing on the source.
+
 2004-09-19 07:44  Petter Reinholdtsen <pere@hungry.com>
 
 	* NEWS, chrpath.1, main.c: Add proper exit code handling and new
