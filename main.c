@@ -27,6 +27,7 @@ static struct option long_options[] =
 {
   {"convert",   0, 0, 'c'},
   {"delete",    0, 0, 'd'},
+  {"help",      0, 0, 'h'},
   {"keepgoing", 0, 0, 'k'},
   {"list",      0, 0, 'l'},
   {"replace",   1, 0, 'r'},
@@ -50,6 +51,7 @@ usage(char *progname)
   printf("   -r <path>|--replace <path>  Replace current rpath/runpath setting\n");
   printf("                               with the path given\n");
   printf("   -l|--list                   List the current rpath/runpath (default)\n");
+  printf("   -h|--help                   Show this usage information.\n");
 #ifndef HAVE_GETOPT_LONG
   printf("\n *** The long options are not available on this platform");
 #endif /* not HAVE_GETOPT_LONG */
@@ -79,7 +81,7 @@ main(int argc, char * const argv[])
     }
 
   do {
-    opt = GETOPT_LONG(argc, argv, "cdklr:v", long_options, &option_index);
+    opt = GETOPT_LONG(argc, argv, "cdhklr:v", long_options, &option_index);
     switch (opt)
       {
 #if defined(DT_RUNPATH)
@@ -107,8 +109,10 @@ main(int argc, char * const argv[])
         break;
       default:
         printf("Invalid argument '%c'\n", opt);
+      case 'h':
         usage(argv[0]);
         exit(0);
+        break;
       }
   } while (-1 != opt);
 
