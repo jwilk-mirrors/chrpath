@@ -1,3 +1,38 @@
+2002-05-05 15:09  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* Makefile.am, chrpath.1: Add manual page.  Thanks to Tollef Fog
+	Heen for writing it.
+
+2002-05-05 15:08  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* debian/: Makefile.am, README.debian: Correct list of files to
+	include, and remove wasted README.debian.
+
+2002-05-05 15:02  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* debian/: changelog, control, copyright, dirs, docs, rules:
+	Updated with the files used by the current Debian package.
+
+2002-02-13 16:57  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* README: Add link to FTP site, and a note about where to send
+	patches.
+
+2001-11-06 12:39  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* elf.c: Avoid leaking file descriptors when elf_open() fails.
+
+2001-11-03 18:56  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS: Added news on debian/ package scripts.
+
+2001-11-03 18:42  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* Makefile.am, configure.in, debian/.cvsignore, debian/Makefile.am,
+	debian/README.debian, debian/changelog, debian/control,
+	debian/copyright, debian/dirs, debian/rules: New target 'debs' to
+	make debian package.
+
 2001-11-03 18:12  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS, configure.in: New release 0.5.
