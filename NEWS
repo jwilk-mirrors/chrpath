@@ -1,5 +1,7 @@
-New in 0.10 released 2002-11-XX:
+New in 0.10 released 2002-11-30:
  * Avoid segfaulting when derefering a NULL pointer.
+ * Added simple self test code.
+ * Converted to use newer autoconf (2.53).
 
 New in 0.9 released 2002-10-28:
  * Bugfix in option parsing.  Now only --replace takes a parameter.
