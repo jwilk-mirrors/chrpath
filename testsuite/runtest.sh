@@ -46,6 +46,13 @@ else
     retval=1
 fi
 
+# I wish inserting a larger path would work, but it doesn't yet
+if $CHRPATH -r '/usr/lib:/usr/local/lib' prog > /dev/null ; then
+    echo "success: chrpath changed rpath to larger path."
+else
+    echo "error: chrpath unable to change rpath to larger path."
+fi
+
 $CHRPATH -c prog > /dev/null
 
 if $CHRPATH -l prog | grep -q 'RUNPATH=/usr/lib' ; then
