@@ -1,5 +1,5 @@
 /*
- * Author: Petter Reinholdtsen <pere@td.org.uit.no>
+ * Author: Petter Reinholdtsen <pere@hungry.com>
  * date:   2001-01-20
  *
  * Alter ELF rpath information (insert, modify, remove).

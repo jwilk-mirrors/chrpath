@@ -3,7 +3,7 @@ Geoffrey Keating <geoffk@ozemail.com.au>
   killrpath.
 Peeter Joot <peeterj@ca.ibm.com>
   Implemented first version of killrpath.c.
-Petter Reinholdtsen <pere@td.org.uit.no>
+Petter Reinholdtsen <pere@hungry.com>
   Collected both implementations and made userfriendly wrapper.
 
 With patches from:
