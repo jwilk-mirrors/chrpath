@@ -1,11 +1,15 @@
+#!/bin/sh
+
+set -x
+
 CHRPATH=../chrpath
 
 retval=0
 
 rm prog
-make prog > /dev/null
+make prog
 
-if $CHRPATH -l prog | grep -q 'RPATH=/usr/local/lib' ; then
+if $CHRPATH -l prog | grep -q 'RPATH=.*/usr/local/lib' ; then
     echo "success: chrpath listed current rpath."
 else
     echo "error: chrpath unable to list current rpath."
@@ -26,8 +30,8 @@ $CHRPATH -c prog > /dev/null
 if $CHRPATH -l prog | grep -q 'RUNPATH=/usr/lib' ; then
     echo "success: chrpath converted rpath to runpath."
 else
-    echo "error: chrpath unable to convert rpath to runpath."
-    retval=1
+    # Not all archs support runpath, ie not a fatal error
+    echo "warning: chrpath unable to convert rpath to runpath."
 fi
 
 $CHRPATH -d prog > /dev/null
