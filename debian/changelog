@@ -1,3 +1,11 @@
+chrpath (0.7-1) unstable; urgency=low
+
+  * New upstream release
+    - Adds runpath support (closes: #154611)
+    - Fixes typo in man page (closes: #154360)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 13 Sep 2002 04:38:48 +0200
+
 chrpath (0.6-1) unstable; urgency=low
 
   * New upstream release (with my contributed man page)
