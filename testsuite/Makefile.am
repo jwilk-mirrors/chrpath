@@ -1,10 +1,8 @@
 CHRPATH = ../chrpath
 
-ifeq ($(LDRPATH),)
-  RPATH =
-else
-  RPATH = $(LDRPATH)/usr/local/lib
-endif
+# This test fail on some archs.  Not sure how to write it in a portable
+# way. [pere 2004-09-18]
+RPATH = $(LDRPATH)/usr/local/lib
 
 noinst_PROGRAMS = prog
 
