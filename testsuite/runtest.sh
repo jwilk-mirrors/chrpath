@@ -9,6 +9,27 @@ retval=0
 rm prog
 make prog
 
+if $CHRPATH -h ; then
+    echo "success: chrpath -h worked."
+else
+    echo "error: chrpath -h failed."
+    retval=1
+fi
+
+if $CHRPATH $0 ; then
+    echo "error: chrpath on /bin/sh script worked."
+    retval=1
+else
+    echo "success: chrpath on /bin/sh script failed."
+fi
+
+if $CHRPATH non-existant file ; then
+    echo "error: chrpath on non-existant file worked."
+    retval=1
+else
+    echo "success: chrpath on non-existant file failed."
+fi
+
 if $CHRPATH -l prog | grep -q 'R.*PATH=.*/usr/local/lib' ; then
     echo "success: chrpath listed current rpath."
 else

@@ -1,3 +1,54 @@
+2004-09-19 07:44  Petter Reinholdtsen <pere@hungry.com>
+
+	* NEWS, chrpath.1, main.c: Add proper exit code handling and new
+	argument --keepgoing (-k) to process all arguments before exiting
+	with an error.
+
+2004-09-19 07:15  Petter Reinholdtsen <pere@hungry.com>
+
+	* testsuite/Makefile.am: Get test working at least on linux.
+
+2004-09-19 07:14  Petter Reinholdtsen <pere@hungry.com>
+
+	* configure.ac: Use AM_MAINTAINER_MODE by default.
+
+2004-07-20 07:07  Petter Reinholdtsen <pere@hungry.com>
+
+	* chrpath.1: Fix typo in manpage (RPATH->CHRPATH).  Thanks to John
+	Morrissey.
+
+2003-12-12 15:03  Petter Reinholdtsen <pere@hungry.com>
+
+	* testsuite/Makefile.am: Handle empty LDRPATH variable.
+
+2003-12-12 15:03  Petter Reinholdtsen <pere@hungry.com>
+
+	* testsuite/runtest.sh: Handle archs where RUNPATH is the set by
+	default.
+
+2003-12-12 14:01  Petter Reinholdtsen <pere@hungry.com>
+
+	* NEWS, configure.ac: Release version 0.12.
+
+2003-12-12 13:53  Petter Reinholdtsen <pere@hungry.com>
+
+	* NEWS, acinclude.m4: Try to get it compiling on Mac OS X / Darwin.
+
+2003-12-12 13:52  Petter Reinholdtsen <pere@hungry.com>
+
+	* protos.h: Make sure the definitions in config.h is used every
+	time this file is included.
+
+2003-12-12 13:50  Petter Reinholdtsen <pere@hungry.com>
+
+	* NEWS, chrpath.c, elf.c: Use p_filesz instead p_memsz when
+	checking if the elf header exist.  This should get it working on
+	Solaris.
+
+2003-09-15 21:12  Petter Reinholdtsen <pere@hungry.com>
+
+	* AUTHORS, chrpath.1, main.c: Update my email address.
+
 2003-09-15 21:10  Petter Reinholdtsen <pere@hungry.com>
 
 	* NEWS: New release 0.10.

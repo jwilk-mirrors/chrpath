@@ -69,7 +69,7 @@ main(int argc, char * const argv[])
   char *newpath = NULL; /* insert this path */
   int opt;
 #ifdef HAVE_GETOPT_LONG
-  int option_index;
+  int option_index = 0;
 #endif /* HAVE_GETOPT_LONG */
 
   if (argc < 2)

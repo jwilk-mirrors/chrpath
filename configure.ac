@@ -50,6 +50,13 @@ if eval "test x$GCC = xyes"; then
   done
 fi
 
+AC_ARG_WITH(coverage, [Enable coverage testing],
+[
+    JAPHAR_GREP_CFLAGS(-g, [ CFLAGS="$CFLAGS -g" ])
+    JAPHAR_GREP_CFLAGS(-fprofile-arcs, [ CFLAGS="$CFLAGS -fprofile-arcs" ])
+    JAPHAR_GREP_CFLAGS(-ftest-coverage, [ CFLAGS="$CFLAGS -ftest-coverage" ])
+], [])
+
 AC_CONFIG_FILES([
         Makefile \
         testsuite/Makefile \
