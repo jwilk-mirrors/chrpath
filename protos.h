@@ -2,7 +2,6 @@
 #define PROTOS_H
 
 #include <elf.h>
-#include <bits/wordsize.h>
 
 #ifdef WORDS_BIGENDIAN
 #define ELFDATA2 ELFDATA2MSB
