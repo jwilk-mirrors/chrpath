@@ -1,3 +1,26 @@
+2003-06-23 23:11  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.ac, protos.h: Avoid non-standard __WORDSIZE.
+
+2003-06-23 22:56  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* deb/: changelog, rules: Update to match Debian package version
+	0.10-2.
+
+2003-06-23 22:56  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, chrpath.c, configure.ac, elf.c, killrpath.c, protos.h: Make
+	chrpath work well on 64 bit arches.  Patch from Tollef Fog
+	Heen/Debian.
+
+2003-02-26 08:28  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* deb/control: Fix typo in debian description.
+
+2003-02-26 08:28  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* configure.ac: Add -Wcomments when compiling with GCC.
+
 2002-11-30 15:12  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS: New release 0.10.
