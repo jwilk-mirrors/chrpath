@@ -31,6 +31,7 @@ usage(char *progname)
   printf("   -d|--delete                 Delete current rpath setting\n");
   printf("   -r <path>|--replace <path>  Replace current rpath setting\n");
   printf("                               with the path given\n");
+  printf("   -l|--list                   List the current rpath (default)\n");
 #ifndef HAVE_GETOPT_LONG
   printf("\n *** The long options are not available on this platform\n");
 #endif /* not HAVE_GETOPT_LONG */
@@ -39,6 +40,7 @@ usage(char *progname)
 static struct option long_options[] =
 {
   {"delete",  1, 0, 'd'},
+  {"list",    1, 0, 'l'},
   {"replace", 1, 0, 'r'},
   {"version", 0, 0, 'v'}
 };
@@ -58,7 +60,7 @@ main(int argc, char * const argv[])
     }
 
   do {
-    opt = GETOPT_LONG(argc, argv, "dr:v", long_options, &option_index);
+    opt = GETOPT_LONG(argc, argv, "dlr:v", long_options, &option_index);
     switch (opt)
       {
       case 'd':
@@ -70,6 +72,9 @@ main(int argc, char * const argv[])
       case 'v':
         printf("%s version %s\n", PACKAGE, VERSION);
         exit(0);
+        break;
+      case 'l': /* This is the default action */
+        newpath = NULL;
         break;
       case -1:
         break;
