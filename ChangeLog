@@ -1,3 +1,16 @@
+2001-10-12 09:04  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, configure.in: New release v0.2.
+
+2001-10-12 09:01  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* README: Add link to elfhack.
+
+2001-10-12 09:00  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Fix typos in option parsing.	Patch from Bradford W.
+	Johnson <bradford@math.umn.edu>.
+
 2001-02-28 23:47  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS: Set release date.
