@@ -65,7 +65,9 @@ main(int argc, char * const argv[])
   int remove = 0;       /* remove or not */
   char *newpath = NULL; /* insert this path */
   int opt;
+#ifdef HAVE_GETOPT_LONG
   int option_index;
+#endif /* HAVE_GETOPT_LONG */
 
   if (argc < 2)
     {
