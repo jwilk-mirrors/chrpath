@@ -22,8 +22,15 @@ esac
 AC_DEFUN(CHRPATH_LDRPATH_OPTION,
 [AC_REQUIRE([AC_CANONICAL_TARGET])[]dnl
 case "$target" in
-	*-linux-*)
+	*-linux*)
 		LDRPATH=-Wl,-rpath,
+		;;
+	*-*-irix*|*-*-osf*)
+		LDRPATH="-rpath "
+		;;
+	*-*-hpux*)
+		# Hm, this seem to set runpath on ia64, not rpath
+		LDRPATH="-Wl,+b,"
 		;;
 	*)
 		LDRPATH="-R "
