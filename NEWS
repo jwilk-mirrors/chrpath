@@ -1,4 +1,7 @@
-New in 0.6 released ???:
+New in 0.6 released 2002-05-05:
+ * Added manual page, thanks to Tollef Fog Heen.
+ * Fix file descriptor leak when elf_open fails.
+ * Update URLs and contact information in documentation.
  * Added debian/ package scripts.
 
 New in 0.5 released 2001-11-03:
