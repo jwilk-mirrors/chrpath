@@ -1,0 +1,6 @@
+2001-01-22 08:47  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* .cvsignore, AUTHORS, Makefile.am, NEWS, README, chrpath.c,
+	configure.in, elf.c, killrpath.c, main.c, protos.h: Initial
+	checking.  Soon to be release v0.1.
+
