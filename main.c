@@ -13,12 +13,24 @@
 #endif
 
 #include <stdio.h>
-#include <getopt.h>
 #include <stdlib.h>
+#include <unistd.h>
+#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+#endif
 #include "protos.h"
 
 #ifdef HAVE_GETOPT_LONG
 #  define GETOPT_LONG getopt_long
+
+static struct option long_options[] =
+{
+  {"delete",  1, 0, 'd'},
+  {"list",    1, 0, 'l'},
+  {"replace", 1, 0, 'r'},
+  {"version", 0, 0, 'v'}
+};
+
 #else /* not HAVE_GETOPT_LONG */
 #  define GETOPT_LONG(argc,argv,optstr,lopts,lidx) getopt(argc,argv,optstr)
 #endif /* not HAVE_GETOPT_LONG */
@@ -36,14 +48,6 @@ usage(char *progname)
   printf("\n *** The long options are not available on this platform\n");
 #endif /* not HAVE_GETOPT_LONG */
 }
-
-static struct option long_options[] =
-{
-  {"delete",  1, 0, 'd'},
-  {"list",    1, 0, 'l'},
-  {"replace", 1, 0, 'r'},
-  {"version", 0, 0, 'v'}
-};
 
 int
 main(int argc, char * const argv[])
