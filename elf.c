@@ -59,6 +59,34 @@ elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
    return fd;
 }
 
+int
+elf_find_dynamic_section(int fd, Elf32_Ehdr *ehdr, Elf32_Phdr *phdr)
+{
+  int i;
+  if (lseek(fd, ehdr->e_phoff, SEEK_SET) == -1)
+  {
+    perror ("positioning for sections");
+    return 1;
+  }
+
+  for (i = 0; i < ehdr->e_phnum; i++)
+  {
+    if (read(fd, &phdr, sizeof(phdr)) != sizeof(phdr))
+    {
+      perror ("reading section header");
+      return 1;
+    }
+    if (phdr->p_type == PT_DYNAMIC)
+      break;
+  }
+  if (i == ehdr->e_phnum)
+    {
+      fprintf (stderr, "No dynamic section found.\n");
+      return 2;
+    }
+  return 0;
+}
+
 void
 elf_close(int fd)
 {

@@ -42,27 +42,11 @@ killrpath(const char *filename)
      return 1;
    }
 
-   if (lseek(fd, ehdr.e_phoff, SEEK_SET) == -1)
+   if (0 != elf_find_dynamic_section(fd, &ehdr, &phdr))
    {
-     perror ("positioning for sections");
+     perror("found no dynamic section");
      return 1;
    }
-
-   for (i = 0; i < ehdr.e_phnum; i++)
-   {
-     if (read(fd, &phdr, sizeof(phdr)) != sizeof(phdr))
-     {
-       perror ("reading section header");
-       return 1;
-     }
-     if (phdr.p_type == PT_DYNAMIC)
-       break;
-   }
-   if (i == ehdr.e_phnum)
-     {
-       fprintf (stderr, "No dynamic section found.\n");
-       return 2;
-     }
 
    dyns = malloc(phdr.p_memsz);
    if (dyns == NULL)
