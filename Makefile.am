@@ -1,3 +1,7 @@
+docdir = $(prefix)/doc/$(PACKAGE)-$(VERSION)
+
+doc_DATA = AUTHORS COPYING ChangeLog INSTALL NEWS README
+
 bin_PROGRAMS = chrpath
 
 chrpath_SOURCES = \
