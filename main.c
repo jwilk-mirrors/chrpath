@@ -38,7 +38,8 @@ static struct option long_options[] =
 static void
 usage(char *progname)
 {
-  printf("Usage: %s [-v|-d|-r <path>] <program>\n\n", progname);
+  printf("Usage: %s [-v|-d|-r <path>] <program> [<program> ...]\n\n",
+         progname);
   printf("   -v|--version                Display program version number\n");
   printf("   -d|--delete                 Delete current rpath setting\n");
   printf("   -r <path>|--replace <path>  Replace current rpath setting\n");
@@ -89,11 +90,14 @@ main(int argc, char * const argv[])
       }
   } while (-1 != opt);
 
-  if (remove)
-    killrpath(argv[optind]);
-  else
-    /* list by default, replace if path is set */
-    chrpath(argv[optind], newpath);
+  while (optind < argc)
+    {
+      if (remove)
+        killrpath(argv[optind++]);
+      else
+        /* list by default, replace if path is set */
+        chrpath(argv[optind++], newpath);
+    }
 
   return 0;
 }
