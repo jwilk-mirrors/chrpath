@@ -5,13 +5,14 @@
 
 #include <elf.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "protos.h"
 
-#ifdef WORD_BIGENDIAN
+#ifdef WORDS_BIGENDIAN
 #define ELFDATA2 ELFDATA2MSB
 #else
 #define ELFDATA2 ELFDATA2LSB
@@ -35,17 +36,17 @@ elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
      return -1;
    }
 
-   if (*(unsigned *)ehdr->e_ident != *(const unsigned *)ELFMAG ||
+   if (0 != memcmp(ehdr->e_ident, ELFMAG, SELFMAG) ||
        ehdr->e_ident[EI_CLASS] != ELFCLASS32 ||
        ehdr->e_ident[EI_DATA] != ELFDATA2 ||
        ehdr->e_ident[EI_VERSION] != EV_CURRENT)
    {
      fprintf(stderr,
-#if defined WORD_BIGENDIAN
+#ifdef WORDS_BIGENDIAN
              "`%s' probably isn't a 32-bit MSB-first ELF file.\n",
-#else
+#else /* not WORD_BIGENDIAN */
              "`%s' probably isn't a 32-bit LSB-first ELF file.\n",
-#endif /* WORD_BIGENDIAN */
+#endif /* not WORD_BIGENDIAN */
              filename);
      return -1;
    }
