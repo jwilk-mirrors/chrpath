@@ -19,6 +19,7 @@ Geoffrey Keating <geoffk@ozemail.com.au>
 #include <unistd.h>
 #include <fcntl.h>
 #include <elf.h>
+#include <link.h>
 #include <stdlib.h>
 #include "protos.h"
 #include <string.h>
