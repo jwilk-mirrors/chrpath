@@ -15,6 +15,12 @@ Similar tools:
 There is elfhack by Ric Klaren doing almost the same thing, and a bit
 more.  <URL:http://wwwhome.cs.utwente.nl/~klaren/software/>.
 
+License:
+--------
+
+chrpath is licensed under the GNU Public Licence.  See COPYING for
+the terms.
+
 Source, patches and fixes:
 --------------------------
 
