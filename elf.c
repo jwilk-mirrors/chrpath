@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include <fcntl.h>
 #include "protos.h"
 
@@ -33,6 +34,7 @@ elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
    if (read(fd, ehdr, sizeof(*ehdr)) != sizeof(*ehdr))
    {
      perror ("reading header");
+     close(fd);
      return -1;
    }
 
@@ -48,6 +50,8 @@ elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
              "`%s' probably isn't a 32-bit LSB-first ELF file.\n",
 #endif /* not WORD_BIGENDIAN */
              filename);
+     close(fd);
+     errno = ENOEXEC; /* Hm, is this the best errno code to use? */
      return -1;
    }
 
@@ -55,6 +59,7 @@ elf_open(const char *filename, int flags, Elf32_Ehdr *ehdr)
    {
      fprintf(stderr, "section size was read as %d, not %d!\n",
             ehdr->e_phentsize, sizeof(Elf32_Phdr));
+     close(fd);
      return -1;
    }
    return fd;
