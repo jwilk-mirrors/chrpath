@@ -9,7 +9,7 @@ retval=0
 rm prog
 make prog
 
-if $CHRPATH -l prog | grep -q 'RPATH=.*/usr/local/lib' ; then
+if $CHRPATH -l prog | grep -q 'R.*PATH=.*/usr/local/lib' ; then
     echo "success: chrpath listed current rpath."
 else
     echo "error: chrpath unable to list current rpath."
@@ -18,7 +18,7 @@ fi
 
 $CHRPATH -r '/usr/lib' prog > /dev/null
 
-if $CHRPATH -l prog | grep -q 'RPATH=/usr/lib' ; then
+if $CHRPATH -l prog | grep -q 'R.*PATH=/usr/lib' ; then
     echo "success: chrpath changed rpath."
 else
     echo "error: chrpath unable to change rpath."
