@@ -19,6 +19,7 @@ AC_CHECK_HEADERS([getopt.h elf.h fcntl.h unistd.h link.h sys/link.h])
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_C_BIGENDIAN
+AC_CHECK_SIZEOF(void *)
 
 dnl Checks for library functions.
 AC_CHECK_FUNCS(getopt_long)
