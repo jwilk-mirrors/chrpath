@@ -4,6 +4,9 @@
 #endif
 
 #include <elf.h>
+#if defined(HAVE_SYS_LINK_H)
+#  include <sys/link.h> /* Find DT_RPATH on Solaris 2.6 */
+#endif /*  HAVE_SYS_LINK_H */
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
