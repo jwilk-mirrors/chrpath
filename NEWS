@@ -2,6 +2,7 @@ New in 0.7 released 200X-XX-XX:
  * Fixed small memleak.
  * Fixed crash bug on Solaris, when reading unknown/broken formats.
  * Fix typos in manpage (s/--remove/--replace/ and some s/ rpath/ chrpath/).
+ * Added runpath-support.
 
 New in 0.6 released 2002-05-05:
  * Added manual page, thanks to Tollef Fog Heen.

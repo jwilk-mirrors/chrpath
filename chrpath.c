@@ -57,7 +57,7 @@ Peeter
 
 
 int
-chrpath(const char *filename, const char *newpath)
+chrpath(const char *filename, const char *newpath, int convert)
 {
   int fd;
   Elf32_Ehdr ehdr;
@@ -70,8 +70,9 @@ chrpath(const char *filename, const char *newpath)
   char * rpath;
   unsigned int rpathlen;
   int oflags;
+  int rpath_dyns_index;
 
-  if (NULL == newpath)
+  if (NULL == newpath && 0 == convert)
      oflags = O_RDONLY;
   else
      oflags = O_RDWR;
@@ -105,25 +106,27 @@ chrpath(const char *filename, const char *newpath)
     }
 
   rpathoff = -1;
-  for (i = 0; dyns[i].d_tag != DT_NULL; i++)
+  for ( rpath_dyns_index = 0; dyns[rpath_dyns_index].d_tag != DT_NULL;
+        ++rpath_dyns_index )
     {
-      if (dyns[i].d_tag == DT_RPATH)
+      if (dyns[rpath_dyns_index].d_tag == DT_RPATH
+          || dyns[rpath_dyns_index].d_tag == DT_RUNPATH)
       {
-         rpathoff = dyns[i].d_un.d_ptr;
+         rpathoff = dyns[rpath_dyns_index].d_un.d_ptr;
          break;
       }
     }
-  free(dyns);
-  dyns = NULL;
   if (rpathoff == -1)
     {
-      printf("%s: no rpath tag found.\n", filename);
+      printf("%s: no rpath or runpath tag found.\n", filename);
+      free(dyns);
       return 2;
     }
 
   if (lseek(fd, ehdr.e_shoff, SEEK_SET) == -1)
   {
     perror ("positioning for sections");
+    free(dyns);
     return 1;
   }
 
@@ -132,6 +135,7 @@ chrpath(const char *filename, const char *newpath)
     if (read(fd, &shdr, sizeof(shdr)) != sizeof(shdr))
     {
       perror ("reading section header");
+      free(dyns);
       return 1;
     }
     if (shdr.sh_type == SHT_STRTAB)
@@ -140,12 +144,14 @@ chrpath(const char *filename, const char *newpath)
   if (i == ehdr.e_shnum)
     {
       fprintf (stderr, "No string table found.\n");
+      free(dyns);
       return 2;
     }
   strtab = (char *)malloc(shdr.sh_size);
   if (strtab == NULL)
     {
       perror ("allocating memory for string table");
+      free(dyns);
       return 1;
     }
   memset(strtab, 0, shdr.sh_size);
@@ -154,23 +160,43 @@ chrpath(const char *filename, const char *newpath)
   {
     perror ("positioning for string table");
     free(strtab);
+    free(dyns);
     return 1;
   }
   if (read(fd, strtab, shdr.sh_size) != (int)shdr.sh_size)
   {
     perror ("reading string table");
     free(strtab);
+    free(dyns);
     return 1;
   }
 
   if ((int)shdr.sh_size < rpathoff)
   {
-    fprintf(stderr, "RPATH string offset not contained in string table");
+    fprintf(stderr, "%s string offset not contained in string table",
+            dyns[rpath_dyns_index].d_tag == DT_RPATH ? "RPATH" : "RUNPATH");
     free(strtab);
+    free(dyns);
     return 5;
   }
   rpath = strtab+rpathoff;
-  printf("%s: RPATH=%s\n", filename, rpath);
+
+  if (convert && dyns[rpath_dyns_index].d_tag == DT_RPATH)
+  {
+    dyns[rpath_dyns_index].d_tag = DT_RUNPATH;
+    if (lseek(fd, phdr.p_offset, SEEK_SET) == -1
+        || write(fd, dyns, phdr.p_filesz) != (int)phdr.p_filesz)
+    {
+      perror ("converting RPATH to RUNPATH");
+      return 1;
+    }
+    printf("%s: RPATH converted to RUNPATH\n", filename);
+  }
+
+  printf("%s: %s=%s\n", filename,
+         dyns[rpath_dyns_index].d_tag == DT_RPATH ? "RPATH" : "RUNPATH", rpath);
+  free(dyns);
+  dyns = NULL;
 
   if (NULL == newpath)
   {
@@ -215,7 +241,8 @@ chrpath(const char *filename, const char *newpath)
     free(strtab);
     return 1;
   }
-  printf("%s:new RPATH: %s\n", filename, rpath);
+  printf("%s: new %s: %s\n", filename,
+         dyns[rpath_dyns_index].d_tag == DT_RPATH ? "RPATH" : "RUNPATH", rpath);
 
   elf_close(fd);
 

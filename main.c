@@ -25,6 +25,7 @@
 
 static struct option long_options[] =
 {
+  {"convert", 1, 0, 'c'},
   {"delete",  1, 0, 'd'},
   {"list",    1, 0, 'l'},
   {"replace", 1, 0, 'r'},
@@ -38,13 +39,14 @@ static struct option long_options[] =
 static void
 usage(char *progname)
 {
-  printf("Usage: %s [-v|-d|-r <path>] <program> [<program> ...]\n\n",
+  printf("Usage: %s [-v|-d|-c|-r <path>] <program> [<program> ...]\n\n",
          progname);
   printf("   -v|--version                Display program version number\n");
-  printf("   -d|--delete                 Delete current rpath setting\n");
-  printf("   -r <path>|--replace <path>  Replace current rpath setting\n");
+  printf("   -d|--delete                 Delete current rpath/runpath setting\n");
+  printf("   -c|--convert                Convert rpath to runpath\n");
+  printf("   -r <path>|--replace <path>  Replace current rpath/runpath setting\n");
   printf("                               with the path given\n");
-  printf("   -l|--list                   List the current rpath (default)\n");
+  printf("   -l|--list                   List the current rpath/runpath (default)\n");
 #ifndef HAVE_GETOPT_LONG
   printf("\n *** The long options are not available on this platform\n");
 #endif /* not HAVE_GETOPT_LONG */
@@ -53,6 +55,7 @@ usage(char *progname)
 int
 main(int argc, char * const argv[])
 {
+  int convert = 0;	/* convert to given type */
   int remove = 0;       /* remove or not */
   char *newpath = NULL; /* insert this path */
   int opt;
@@ -65,9 +68,12 @@ main(int argc, char * const argv[])
     }
 
   do {
-    opt = GETOPT_LONG(argc, argv, "dlr:v", long_options, &option_index);
+    opt = GETOPT_LONG(argc, argv, "cdlr:v", long_options, &option_index);
     switch (opt)
       {
+      case 'c':
+        convert = 1;
+        break;
       case 'd':
         remove = 1;
         break;
@@ -96,7 +102,7 @@ main(int argc, char * const argv[])
         killrpath(argv[optind++]);
       else
         /* list by default, replace if path is set */
-        chrpath(argv[optind++], newpath);
+        chrpath(argv[optind++], newpath, convert);
     }
 
   return 0;

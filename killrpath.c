@@ -68,7 +68,7 @@ killrpath(const char *filename)
    for (i = 0; dyns[i].d_tag != DT_NULL; i++)
      {
        dyns[dynpos] = dyns[i];
-       if (dyns[i].d_tag != DT_RPATH)
+       if (dyns[i].d_tag != DT_RPATH && dyns[i].d_tag != DT_RUNPATH)
         dynpos++;
      }
    for (; dynpos < i; dynpos++)

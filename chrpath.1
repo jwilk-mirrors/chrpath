@@ -12,30 +12,36 @@
 .\" along with this program; if not, write to the Free Software
 .\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 .\"
-.TH RPATH 1 "May 4, 2002" "chrpath" "change rpath in binaries"
+.TH RPATH 1 "May 4, 2002" "chrpath" "change rpath/runpath in binaries"
 .SH NAME
-chrpath \- change the rpath in binaries
+chrpath \- change the rpath or runpath in binaries
 .SH SYNOPSIS
-\fBchrpath\fP [ \fB-v\fP | \fB--version\fP ] [ \fB-d\fP | \fB--delete\fP
-] [ \fB-r\fP \fI<path>\fP |\  \fB--replace\fP \fI<path>\fP ] [
-\fB-l\fP | \fB--list\fP ] \fI<program>\fP [ \fI<program>\fP ... ]
+\fBchrpath\fP
+[ \fB-v\fP | \fB--version\fP ]
+[ \fB-d\fP | \fB--delete\fP ]
+[ \fB-r\fP \fI<path>\fP |\  \fB--replace\fP \fI<path>\fP ]
+[ \fB-c\fP | \fB--convert\fP ]
+[ \fB-l\fP | \fB--list\fP ]
+\fI<program>\fP [ \fI<program>\fP ... ]
 .SH DESCRIPTION
-\fBchrpath\fP changes, lists or removes the rpath setting in a
-binary.  The rpath is where the runtime linker should look for the
-libraries needed for a program.
+\fBchrpath\fP changes, lists or removes the rpath or runpath setting in a
+binary.  The rpath, or runpath if it is present, is where the runtime linker
+should look for the libraries needed for a program.
 .SH OPTIONS
 .TP
 .BR -v \ |\  --version
 Display program version number
 .TP
 .BR -d \ |\  --delete
-Delete current rpath setting
+Delete current rpath or runpath setting
 .TP
+.BR -c \ |\  --convert
+Convert the rpath setting into a runpath setting
 .BI -r\ \fI<path>\fP\ |\ --replace\ \fI<path>\fP
-Replace current rpath setting with the path given
+Replace current rpath or runpath setting with the path given
 .TP
 .BR -l \ |\  --list
-List the current rpath (default)
+List the current rpath or runpath (default)
 .SH AUTHOR
 The chrpath program was written by Petter Reinholdtsen
 <pere@td.org.uit.no>, based on works by Geoffrey Keating
