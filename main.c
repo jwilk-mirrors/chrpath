@@ -17,14 +17,23 @@
 #include <stdlib.h>
 #include "protos.h"
 
+#ifdef HAVE_GETOPT_LONG
+#  define GETOPT_LONG getopt_long
+#else /* not HAVE_GETOPT_LONG */
+#  define GETOPT_LONG(argc,argv,optstr,lopts,lidx) getopt(argc,argv,optstr)
+#endif /* not HAVE_GETOPT_LONG */
+
 static void
 usage(char *progname)
 {
-  printf("Usage: %s [-d|-r <path>] <program>\n\n", progname);
+  printf("Usage: %s [-v|-d|-r <path>] <program>\n\n", progname);
+  printf("   -v|--version                Display program version number\n");
   printf("   -d|--delete                 Delete current rpath setting\n");
   printf("   -r <path>|--replace <path>  Replace current rpath setting\n");
   printf("                               with the path given\n");
-  printf("   -v|--version                Display program version number\n");
+#ifndef HAVE_GETOPT_LONG
+  printf("\n *** The long options are not available on this platform\n");
+#endif /* not HAVE_GETOPT_LONG */
 }
 
 static struct option long_options[] =
@@ -49,8 +58,7 @@ main(int argc, char * const argv[])
     }
 
   do {
-    opt = getopt_long(argc, argv, "dr:v",
-                      long_options, &option_index);
+    opt = GETOPT_LONG(argc, argv, "dr:v", long_options, &option_index);
     switch (opt)
       {
       case 'd':
