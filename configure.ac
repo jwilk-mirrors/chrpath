@@ -31,6 +31,7 @@ if eval "test x$GCC = xyes"; then
       -Wall \
       -Wcast-align \
       -Wcast-qual \
+      -Wcomments \
       -Wmissing-declarations \
       -Wmissing-prototypes \
       -Wpointer-arith \
