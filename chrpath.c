@@ -92,13 +92,13 @@ chrpath(const char *filename, const char *newpath, int convert)
      return 1;
    }
 
-  dyns = malloc(phdr.p_memsz);
+  dyns = malloc(phdr.p_filesz);
   if (dyns == NULL)
     {
       perror ("allocating memory for dynamic section");
       return 1;
     }
-  memset(dyns, 0, phdr.p_memsz);
+  memset(dyns, 0, phdr.p_filesz);
   if (lseek(fd, phdr.p_offset, SEEK_SET) == -1
       || read(fd, dyns, phdr.p_filesz) != (int)phdr.p_filesz)
     {
