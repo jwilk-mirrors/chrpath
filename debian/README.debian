@@ -1,6 +1,0 @@
-chrpath for Debian 
-------------------
-
-Small utility to change the rpath setting in ELF binaries.
-
-Petter Reinholdtsen <pere@hungry.com>, Sat,  3 Nov 2001 19:23:58 +0100
