@@ -1,3 +1,24 @@
+2001-10-16 09:16  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, configure.in: New release v0.3
+
+2001-10-16 09:14  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* AUTHORS: Update list of contributors.
+
+2001-10-16 09:11  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* main.c: Include <stdlib.h> to find exit().
+
+2001-10-16 09:03  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* elf.c: Fix typo in elf_find_dynamic_section().  Patch from David
+	Hull.
+
+2001-10-16 09:01  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* killrpath.c: Include <string.h> to find memset().
+
 2001-10-12 09:04  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* NEWS, configure.in: New release v0.2.
