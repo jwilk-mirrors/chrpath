@@ -25,9 +25,9 @@
 
 static struct option long_options[] =
 {
-  {"convert", 1, 0, 'c'},
-  {"delete",  1, 0, 'd'},
-  {"list",    1, 0, 'l'},
+  {"convert", 0, 0, 'c'},
+  {"delete",  0, 0, 'd'},
+  {"list",    0, 0, 'l'},
   {"replace", 1, 0, 'r'},
   {"version", 0, 0, 'v'}
 };
