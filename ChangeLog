@@ -1,3 +1,24 @@
+2002-05-25 22:21  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS: Started on 0.7 news.
+
+2002-05-25 22:18  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* .cvsignore, debian/.cvsignore: Ignore generated files.
+
+2002-05-25 22:17  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* debian/: changelog, copyright, rules: Updated with current info
+	from Debian.
+
+2002-05-25 22:14  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* chrpath.c: Avoid memory leaks in chrpath().
+
+2002-05-05 15:12  Petter Reinholdtsen <pere@td.org.uit.no>
+
+	* NEWS, configure.in: New release 0.6.
+
 2002-05-05 15:09  Petter Reinholdtsen <pere@td.org.uit.no>
 
 	* Makefile.am, chrpath.1: Add manual page.  Thanks to Tollef Fog
