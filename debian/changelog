@@ -1,3 +1,22 @@
+chrpath (0.6-1) unstable; urgency=low
+
+  * New upstream release (with my contributed man page)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sun,  5 May 2002 17:35:20 +0200
+
+chrpath (0.5-2) unstable; urgency=low
+
+  * add man page. (closes: #137405)
+  * make non-native package.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Sat,  4 May 2002 21:22:51 +0200
+
+chrpath (0.5-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 14 Feb 2002 04:03:22 +0100
+
 chrpath (0.5-1) unstable; urgency=low
 
   * Initial Release.

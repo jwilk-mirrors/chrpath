@@ -55,7 +55,7 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installdocs
-	dh_installman
+	dh_installman chrpath.1
 	dh_undocumented
 	dh_installchangelogs ChangeLog
 	dh_link
