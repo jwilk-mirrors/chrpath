@@ -16,6 +16,13 @@ else
     retval=1
 fi
 
+if $CHRPATH -v ; then
+    echo "success: chrpath -v worked."
+else
+    echo "error: chrpath -v failed."
+    retval=1
+fi
+
 if $CHRPATH $0 ; then
     echo "error: chrpath on /bin/sh script worked."
     retval=1
@@ -23,7 +30,7 @@ else
     echo "success: chrpath on /bin/sh script failed."
 fi
 
-if $CHRPATH non-existant file ; then
+if $CHRPATH non-existant-file ; then
     echo "error: chrpath on non-existant file worked."
     retval=1
 else
