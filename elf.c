@@ -90,6 +90,13 @@ elf_find_dynamic_section(int fd, Elf32_Ehdr *ehdr, Elf32_Phdr *phdr)
       fprintf (stderr, "No dynamic section found.\n");
       return 2;
     }
+
+  if (0 == phdr->p_memsz)
+    {
+      fprintf (stderr, "Length of dynamic section is zero.\n");
+      return 3;
+    }
+
   return 0;
 }
 
