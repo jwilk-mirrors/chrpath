@@ -1,4 +1,4 @@
-New in 0.12 released 2003-12-XX:
+New in 0.12 released 2003-12-12:
  * Use p_filesz instead p_memsz when checking if the elf
    header exist.  This should get it working on Solaris.
  * Try to get it compiling on Mac OS X / Darwin.
