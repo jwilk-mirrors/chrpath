@@ -1,0 +1,7 @@
+Geoffrey Keating <geoffk@ozemail.com.au>
+  Implemented first version of chrpath.c based on first version of
+  killrpath.
+Peeter Joot <peeterj@ca.ibm.com>
+  Implemented first version of killrpath.c.
+Petter Reinholdtsen <pere@td.org.uit.no>
+  Collected both implementations and made userfriendly wrapper.
