@@ -19,7 +19,9 @@ Geoffrey Keating <geoffk@ozemail.com.au>
 #include <unistd.h>
 #include <fcntl.h>
 #include <elf.h>
-#include <link.h>
+#if defined(HAVE_LINK_H)
+#  include <link.h>
+#endif /* HAVE_LINK_H */
 #include <stdlib.h>
 #include "protos.h"
 #include <string.h>
