@@ -52,10 +52,10 @@ main(int argc, char * const argv[])
                       long_options, &option_index);
     switch (opt)
       {
-      case 'k':
+      case 'd':
         remove = 1;
         break;
-      case 'R':
+      case 'r':
         newpath = optarg;
         break;
       case 'v':
@@ -72,9 +72,10 @@ main(int argc, char * const argv[])
   } while (-1 != opt);
 
   if (remove)
-    killrpath(argv[1]);
+    killrpath(argv[optind]);
   else
-    chrpath(argv[1], newpath); /* list by default, replace if path is set */
+    /* list by default, replace if path is set */
+    chrpath(argv[optind], newpath);
 
   return 0;
 }
