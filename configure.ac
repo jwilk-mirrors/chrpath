@@ -6,6 +6,8 @@ AM_INIT_AUTOMAKE("chrpath", "0.11")
 AC_CONFIG_SRCDIR(chrpath.c)
 AM_CONFIG_HEADER(config.h)
 
+CHRPATH_LDRPATH_OPTION
+
 dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
@@ -58,4 +60,5 @@ echo "Configure status:"
 echo "-----------------"
 echo " CC     = $CC"
 echo " CFLAGS = $CFLAGS"
+echo " LDRPATH= $LDRPATH"
 echo

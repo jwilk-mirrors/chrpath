@@ -18,3 +18,16 @@ AC_DEFUN(JAPHAR_GREP_CFLAGS,
   ;;
 esac
 ])
+
+AC_DEFUN(CHRPATH_LDRPATH_OPTION,
+[AC_REQUIRE([AC_CANONICAL_TARGET])[]dnl
+case "$target" in
+	*-linux-*)
+		LDRPATH=-Wl,-rpath,
+		;;
+	*)
+		LDRPATH="-R "
+		;;
+esac
+AC_SUBST(LDRPATH)
+])

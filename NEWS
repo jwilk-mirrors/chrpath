@@ -1,5 +1,7 @@
-New in 0.11 released 2003-06-XX:
+New in 0.11 released 2003-08-XX:
  * Make chrpath work well on 64 bit arches.
+ * Try to make the test code more portable (choosing
+   -rpath/-R depending on arch).
 
 New in 0.10 released 2002-11-30:
  * Avoid segfaulting when derefering a NULL pointer.
