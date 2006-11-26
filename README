@@ -27,5 +27,8 @@ Source, patches and fixes:
 The latest source is available from
   <URL:ftp://ftp.hungry.com/pub/hungry/chrpath/>.
 
+The project repository is available from
+<URL:https://alioth.debian.org/projects/chrpath/>
+
 Send patches and updates to Petter Reinholdtsen (check AUTHORS for
 current address).
