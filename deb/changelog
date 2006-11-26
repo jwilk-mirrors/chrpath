@@ -1,3 +1,9 @@
+chrpath (0.13-2) unstable; urgency=low
+
+  * Update config.{guess,sub}.  (closes: #342383)
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 12 Jun 2006 13:36:38 +0200
+
 chrpath (0.13-1) unstable; urgency=low
 
   * New upstream release
