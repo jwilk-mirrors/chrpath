@@ -1,4 +1,4 @@
-If you use the CVS version, you need to run the following commands to
-get compilable source:
+If you use the version from the subversion repository, you need to run
+the following commands to get compilable source:
 
   aclocal; autoheader; automake -ac; autoconf
