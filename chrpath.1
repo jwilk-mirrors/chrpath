@@ -40,7 +40,8 @@ Delete current rpath or runpath setting
 Convert the rpath setting into a runpath setting
 .TP
 .BI -r\ \fI<path>\fP\ |\ --replace\ \fI<path>\fP
-Replace current rpath or runpath setting with the path given
+Replace current rpath or runpath setting with the path given.  The new
+path must be shorter or the same length as the current path.
 .TP
 .BR -k \ |\  --keepgoing
 Do not fail on first error, but process all arguments before returning
