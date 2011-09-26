@@ -31,7 +31,8 @@ static struct option long_options[] =
   {"keepgoing", 0, 0, 'k'},
   {"list",      0, 0, 'l'},
   {"replace",   1, 0, 'r'},
-  {"version",   0, 0, 'v'}
+  {"version",   0, 0, 'v'},
+  {0, 0, 0, 0}
 };
 
 #else /* not HAVE_GETOPT_LONG */
