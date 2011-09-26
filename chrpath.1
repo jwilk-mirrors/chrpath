@@ -61,6 +61,13 @@ If all operations were successful
 if one of the operations failed.  A failing operation terminates
 the program unless -k is specified.
 
+.SH BUGS
+This program cannot create an RPATH tag if the ELF does not have one,
+and it can only replace an RPATH with one of equal or shorter
+length. (Moving ELF sections following a lengthened string table would
+be difficult and error-prone at best, and is sometimes outright
+impossible due to issues like limited ranges in jump instructions.)
+
 .SH AUTHOR
 The chrpath program was written by Petter Reinholdtsen
 <pere@hungry.com>, based on works by Geoffrey Keating

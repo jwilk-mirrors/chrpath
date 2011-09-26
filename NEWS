@@ -3,6 +3,8 @@ New in 0.14 released 2005-XX-XX:
  * Applied patch from debian to support Hurd and k*BSD.
  * Moved project to <URL: https://alioth.debian.org/projects/chrpath/ >
  * Updated autoconf/automake-related files to latest versions.
+ * Document rpath size limitation better in the manual page.
+   Patch from Eric Raymond.
 
 New in 0.13 released 2004-09-19:
  * Change exit code handling.  Return an error if the operation fail.
