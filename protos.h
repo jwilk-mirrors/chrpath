@@ -1,6 +1,7 @@
 #ifndef PROTOS_H
 #define PROTOS_H
 
+#include <byteswap.h>
 #include <elf.h>
 #include "config.h"
 
@@ -9,21 +10,42 @@
 #else
 #define ELFDATA2 ELFDATA2LSB
 #endif
-#if SIZEOF_VOID_P == 8
-#define Elf_Ehdr Elf64_Ehdr
-#define ELFCLASS ELFCLASS64
-#define Elf_Phdr Elf64_Phdr
-#define Elf_Shdr Elf64_Shdr
-#define Elf_Dyn  Elf64_Dyn
-#elif SIZEOF_VOID_P == 4
-#define Elf_Ehdr Elf32_Ehdr
-#define ELFCLASS ELFCLASS32
-#define Elf_Phdr Elf32_Phdr
-#define Elf_Shdr Elf32_Shdr
-#define Elf_Dyn  Elf32_Dyn
-#else
+#if SIZEOF_VOID_P != 8 && SIZEOF_VOID_P != 4
 #error "Unknown word size (SIZEOF_VOID_P)!"
 #endif
+
+typedef union {
+  unsigned char e_ident[EI_NIDENT];
+  Elf32_Ehdr e32;
+  Elf64_Ehdr e64;
+} Elf_Ehdr;
+
+typedef union {
+  Elf32_Shdr e32;
+  Elf64_Shdr e64;
+} Elf_Shdr;
+
+typedef union {
+  Elf32_Phdr e32;
+  Elf64_Phdr e64;
+} Elf_Phdr;
+
+int is_e32(void);
+int swap_bytes(void);
+
+#define DO_SWAPU32(x) ( !swap_bytes() ? x : (uint32_t)bswap_32(x) )
+#define DO_SWAPU64(x) ( !swap_bytes() ? x : (uint64_t)bswap_64(x) )
+#define DO_SWAPS32(x) ( !swap_bytes() ? x : (int32_t)bswap_32(x) )
+#define DO_SWAPS64(x) ( !swap_bytes() ? x : (int64_t)bswap_64(x) )
+
+#define EHDRS(x) (is_e32() ? DO_SWAPS32(ehdr.e32.x) : DO_SWAPS64(ehdr.e64.x))
+#define EHDRU(x) (is_e32() ? DO_SWAPU32(ehdr.e32.x) : DO_SWAPU64(ehdr.e64.x))
+#define PHDR(x) (is_e32() ? DO_SWAPU32(phdr.e32.x) : DO_SWAPU64(phdr.e64.x))
+#define SHDR(x) (is_e32() ? DO_SWAPU32(shdr.e32.x) : DO_SWAPU64(shdr.e64.x))
+#define DYNSU(i,x) (is_e32() ? DO_SWAPU32(((Elf32_Dyn *)dyns)[i].x) \
+  : DO_SWAPU64(((Elf64_Dyn *)dyns)[i].x))
+#define DYNSS(i,x) (is_e32() ? DO_SWAPS32(((Elf32_Dyn *)dyns)[i].x) \
+  : DO_SWAPS64(((Elf64_Dyn *)dyns)[i].x))
 
 int killrpath(const char *filename);
 int chrpath(const char *filename, const char *newpath, int convert);

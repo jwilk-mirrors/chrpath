@@ -33,8 +33,6 @@ AC_CHECK_FUNCS(getopt_long)
 
 if eval "test x$GCC = xyes"; then
   for flag in \
-      -ansi \
-      -pedantic \
       -W \
       -Wall \
       -Wcast-align \

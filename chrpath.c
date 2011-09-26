@@ -66,7 +66,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   int i;
   Elf_Phdr phdr;
   Elf_Shdr shdr;
-  Elf_Dyn *dyns;
+  void *dyns;
   int rpathoff;
   char * strtab;
   char * rpath;
@@ -92,15 +92,15 @@ chrpath(const char *filename, const char *newpath, int convert)
      return 1;
    }
 
-  dyns = malloc(phdr.p_filesz);
+  dyns = malloc(PHDR(p_filesz));
   if (dyns == NULL)
     {
       perror ("allocating memory for dynamic section");
       return 1;
     }
-  memset(dyns, 0, phdr.p_filesz);
-  if (lseek(fd, phdr.p_offset, SEEK_SET) == -1
-      || read(fd, dyns, phdr.p_filesz) != (int)phdr.p_filesz)
+  memset(dyns, 0, PHDR(p_filesz));
+  if (lseek(fd, PHDR(p_offset), SEEK_SET) == -1
+      || read(fd, dyns, PHDR(p_filesz)) != (int)PHDR(p_filesz))
     {
       perror ("reading dynamic section");
       free(dyns);
@@ -108,12 +108,12 @@ chrpath(const char *filename, const char *newpath, int convert)
     }
 
   rpathoff = -1;
-  for ( rpath_dyns_index = 0; dyns[rpath_dyns_index].d_tag != DT_NULL;
+  for ( rpath_dyns_index = 0; DYNSS(rpath_dyns_index, d_tag) != DT_NULL;
         ++rpath_dyns_index )
     {
-      if ( elf_dynpath_tag(dyns[rpath_dyns_index].d_tag) )
+      if ( elf_dynpath_tag(DYNSS(rpath_dyns_index, d_tag)) )
       {
-         rpathoff = dyns[rpath_dyns_index].d_un.d_ptr;
+         rpathoff = DYNSU(rpath_dyns_index, d_un.d_ptr);
          break;
       }
     }
@@ -124,47 +124,48 @@ chrpath(const char *filename, const char *newpath, int convert)
       return 2;
     }
 
-  if (lseek(fd, ehdr.e_shoff, SEEK_SET) == -1)
+  if (lseek(fd, EHDRU(e_shoff), SEEK_SET) == -1)
   {
     perror ("positioning for sections");
     free(dyns);
     return 1;
   }
 
-  for (i = 0; i < ehdr.e_shnum; i++)
+  for (i = 0; i < EHDRS(e_shnum); i++)
   {
-    if (read(fd, &shdr, sizeof(shdr)) != sizeof(shdr))
+    const size_t sz_shdr = is_e32() ? sizeof(Elf32_Shdr) : sizeof(Elf64_Shdr);
+    if (read(fd, &shdr, sz_shdr) != (ssize_t)sz_shdr)
     {
       perror ("reading section header");
       free(dyns);
       return 1;
     }
-    if (shdr.sh_type == SHT_STRTAB)
+    if (SHDR(sh_type) == SHT_STRTAB)
       break;
   }
-  if (i == ehdr.e_shnum)
+  if (i == EHDRS(e_shnum))
     {
       fprintf (stderr, "No string table found.\n");
       free(dyns);
       return 2;
     }
-  strtab = (char *)malloc(shdr.sh_size);
+  strtab = (char *)malloc(SHDR(sh_size));
   if (strtab == NULL)
     {
       perror ("allocating memory for string table");
       free(dyns);
       return 1;
     }
-  memset(strtab, 0, shdr.sh_size);
+  memset(strtab, 0, SHDR(sh_size));
 
-  if (lseek(fd, shdr.sh_offset, SEEK_SET) == -1)
+  if (lseek(fd, SHDR(sh_offset), SEEK_SET) == -1)
   {
     perror ("positioning for string table");
     free(strtab);
     free(dyns);
     return 1;
   }
-  if (read(fd, strtab, shdr.sh_size) != (int)shdr.sh_size)
+  if (read(fd, strtab, SHDR(sh_size)) != (int)SHDR(sh_size))
   {
     perror ("reading string table");
     free(strtab);
@@ -172,10 +173,10 @@ chrpath(const char *filename, const char *newpath, int convert)
     return 1;
   }
 
-  if ((int)shdr.sh_size < rpathoff)
+  if ((int)SHDR(sh_size) < rpathoff)
   {
     fprintf(stderr, "%s string offset not contained in string table",
-            elf_tagname(dyns[rpath_dyns_index].d_tag));
+            elf_tagname(DYNSS(rpath_dyns_index, d_tag)));
     free(strtab);
     free(dyns);
     return 5;
@@ -183,11 +184,16 @@ chrpath(const char *filename, const char *newpath, int convert)
   rpath = strtab+rpathoff;
 
 #if defined(DT_RUNPATH)
-  if (convert && dyns[rpath_dyns_index].d_tag == DT_RPATH)
+  if (convert && DYNSS(rpath_dyns_index, d_tag) == DT_RPATH)
   {
-    dyns[rpath_dyns_index].d_tag = DT_RUNPATH;
-    if (lseek(fd, phdr.p_offset, SEEK_SET) == -1
-        || write(fd, dyns, phdr.p_filesz) != (int)phdr.p_filesz)
+    if (is_e32())
+      ((Elf32_Dyn *)dyns)[rpath_dyns_index].d_tag = swap_bytes() ?
+        bswap_32(DT_RUNPATH) : DT_RUNPATH;
+    else
+      ((Elf64_Dyn *)dyns)[rpath_dyns_index].d_tag = swap_bytes() ?
+        bswap_64(DT_RUNPATH) : DT_RUNPATH;
+    if (lseek(fd, PHDR(p_offset), SEEK_SET) == -1
+        || write(fd, dyns, PHDR(p_filesz)) != (int)PHDR(p_filesz))
     {
       perror ("converting RPATH to RUNPATH");
       return 1;
@@ -196,7 +202,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   }
 #endif /* DT_RUNPATH */
 
-  printf("%s: %s=%s\n", filename, elf_tagname(dyns[rpath_dyns_index].d_tag),
+  printf("%s: %s=%s\n", filename, elf_tagname(DYNSS(rpath_dyns_index, d_tag)),
          rpath);
 
   if (NULL == newpath)
@@ -212,7 +218,7 @@ chrpath(const char *filename, const char *newpath, int convert)
    * Calculate the maximum rpath length (will be equal to rpathlen unless
    * we have previously truncated it).
    */
-  for ( i = rpathoff + rpathlen ; (i < (int)shdr.sh_size
+  for ( i = rpathoff + rpathlen ; (i < (int)SHDR(sh_size)
                                    && strtab[i] == '\0') ; i++ )
     ;
   i--;
@@ -232,7 +238,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   memset(rpath, 0, rpathlen);
   strcpy(rpath, newpath);
 
-  if (lseek(fd, shdr.sh_offset+rpathoff, SEEK_SET) == -1)
+  if (lseek(fd, SHDR(sh_offset)+rpathoff, SEEK_SET) == -1)
   {
     perror ("positioning for RPATH");
     free(dyns);
@@ -247,7 +253,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     return 1;
   }
   printf("%s: new %s: %s\n", filename,
-         elf_tagname(dyns[rpath_dyns_index].d_tag), rpath);
+         elf_tagname(DYNSS(rpath_dyns_index, d_tag)), rpath);
 
   elf_close(fd);
 

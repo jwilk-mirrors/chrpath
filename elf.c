@@ -16,10 +16,32 @@
 #include <fcntl.h>
 #include "protos.h"
 
+#define EHDR_PS(x) (is_e32() ? DO_SWAPS32(ehdr->e32.x) : DO_SWAPS64(ehdr->e64.x))
+#define PHDR_PS(x) (is_e32() ? DO_SWAPS32(phdr->e32.x) : DO_SWAPS64(phdr->e64.x))
+#define EHDR_PU(x) (is_e32() ? DO_SWAPU32(ehdr->e32.x) : DO_SWAPU64(ehdr->e64.x))
+#define PHDR_PU(x) (is_e32() ? DO_SWAPU32(phdr->e32.x) : DO_SWAPU64(phdr->e64.x))
+
+static int is_e32_flag;
+static int swap_bytes_flag;
+
+int
+is_e32(void)
+{
+  return is_e32_flag;
+}
+
+int
+swap_bytes(void)
+{
+  return swap_bytes_flag;
+}
+
 int
 elf_open(const char *filename, int flags, Elf_Ehdr *ehdr)
 {
    int fd;
+   size_t sz_ehdr;
+   size_t sz_phdr;
 
    fd = open(filename, flags);
    if (fd == -1)
@@ -28,34 +50,43 @@ elf_open(const char *filename, int flags, Elf_Ehdr *ehdr)
      return -1;
    }
 
-   if (read(fd, ehdr, sizeof(*ehdr)) != sizeof(*ehdr))
+   if (read(fd, ehdr, EI_NIDENT) != EI_NIDENT)
+   {
+     perror ("reading header (e_ident)");
+     close(fd);
+     return -1;
+   }
+
+   if (0 != memcmp(ehdr->e_ident, ELFMAG, SELFMAG) ||
+       (ehdr->e_ident[EI_CLASS] != ELFCLASS32 &&
+        ehdr->e_ident[EI_CLASS] != ELFCLASS64) ||
+       (ehdr->e_ident[EI_DATA] != ELFDATA2LSB &&
+        ehdr->e_ident[EI_DATA] != ELFDATA2MSB) ||
+       ehdr->e_ident[EI_VERSION] != EV_CURRENT)
+   {
+     fprintf(stderr, "`%s' probably isn't an ELF file.\n", filename);
+     close(fd);
+     errno = ENOEXEC; /* Hm, is this the best errno code to use? */
+     return -1;
+   }
+
+   is_e32_flag = ehdr->e_ident[EI_CLASS] == ELFCLASS32;
+   swap_bytes_flag = ehdr->e_ident[EI_DATA] != ELFDATA2;
+
+   sz_ehdr = is_e32() ? sizeof(Elf32_Ehdr) : sizeof(Elf64_Ehdr);
+   if (read(fd, ((char *)ehdr) + EI_NIDENT, sz_ehdr - EI_NIDENT)
+       != (ssize_t)(sz_ehdr - EI_NIDENT))
    {
      perror ("reading header");
      close(fd);
      return -1;
    }
 
-   if (0 != memcmp(ehdr->e_ident, ELFMAG, SELFMAG) ||
-       ehdr->e_ident[EI_CLASS] != ELFCLASS ||
-       ehdr->e_ident[EI_DATA] != ELFDATA2 ||
-       ehdr->e_ident[EI_VERSION] != EV_CURRENT)
-   {
-     fprintf(stderr,
-#ifdef WORDS_BIGENDIAN
-             "`%s' probably isn't a %d-bit MSB-first ELF file.\n",
-#else /* not WORD_BIGENDIAN */
-             "`%s' probably isn't a %d-bit LSB-first ELF file.\n",
-#endif /* not WORD_BIGENDIAN */
-             filename, SIZEOF_VOID_P * 8);
-     close(fd);
-     errno = ENOEXEC; /* Hm, is this the best errno code to use? */
-     return -1;
-   }
-
-   if (ehdr->e_phentsize != sizeof(Elf_Phdr))
+   sz_phdr = is_e32() ? sizeof(Elf32_Phdr) : sizeof(Elf64_Phdr);
+   if (EHDR_PS(e_phentsize) != sz_phdr)
    {
      fprintf(stderr, "section size was read as %d, not %d!\n",
-            ehdr->e_phentsize, sizeof(Elf_Phdr));
+            (int)EHDR_PS(e_phentsize), (int)sz_phdr);
      close(fd);
      return -1;
    }
@@ -66,29 +97,30 @@ int
 elf_find_dynamic_section(int fd, Elf_Ehdr *ehdr, Elf_Phdr *phdr)
 {
   int i;
-  if (lseek(fd, ehdr->e_phoff, SEEK_SET) == -1)
+  if (lseek(fd, EHDR_PU(e_phoff), SEEK_SET) == -1)
   {
     perror ("positioning for sections");
     return 1;
   }
 
-  for (i = 0; i < ehdr->e_phnum; i++)
+  for (i = 0; i < EHDR_PS(e_phnum); i++)
   {
-    if (read(fd, phdr, sizeof(*phdr)) != sizeof(*phdr))
+    const size_t sz_phdr = is_e32() ? sizeof(Elf32_Phdr) : sizeof(Elf64_Phdr);
+    if (read(fd, phdr, sz_phdr) != (ssize_t)sz_phdr)
     {
       perror ("reading section header");
       return 1;
     }
-    if (phdr->p_type == PT_DYNAMIC)
+    if (PHDR_PU(p_type) == PT_DYNAMIC)
       break;
   }
-  if (i == ehdr->e_phnum)
+  if (i == EHDR_PS(e_phnum))
     {
       fprintf (stderr, "No dynamic section found.\n");
       return 2;
     }
 
-  if (0 == phdr->p_filesz)
+  if (0 == PHDR_PU(p_filesz))
     {
       fprintf (stderr, "Length of dynamic section is zero.\n");
       return 3;

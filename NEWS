@@ -6,6 +6,9 @@ New in 0.14 released 2005-XX-XX:
  * Document rpath size limitation better in the manual page.
    Patch from Eric Raymond.
  * Fix typo in handling of long arguments.  Patch from Eric Raymond.
+ * Now works even when the ELF file has endianness/word length 
+   different from the host machime.  Patch from Javier Serrano Polo,
+   adjusted to compile with -ansi and -pedantic.
 
 New in 0.13 released 2004-09-19:
  * Change exit code handling.  Return an error if the operation fail.
