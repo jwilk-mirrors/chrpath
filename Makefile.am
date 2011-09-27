@@ -18,7 +18,7 @@ chrpath_SOURCES = \
 	elf.c		\
 	protos.h
 
-EXTRA_DIST = ChangeLog.usermap $(man_MANS)
+EXTRA_DIST = $(man_MANS)
 
 CLEANFILES = *.bb *.bbg *.da *.gcov testsuite/*.bb testsuite/*.bbg
 coverage: all check
