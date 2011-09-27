@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT("chrpath", "0.14", pere@hungry.com)
+AC_INIT(chrpath, 0.14, pere@hungry.com)
 
 AC_CANONICAL_TARGET
 
