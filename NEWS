@@ -1,4 +1,4 @@
-New in 0.14 released 2005-XX-XX:
+New in 0.14 released 2011-09-27:
  * Updated debian build rules from the current Debian package.
  * Applied patch from debian to support Hurd and k*BSD.
  * Moved project to <URL: https://alioth.debian.org/projects/chrpath/ >
