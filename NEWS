@@ -4,6 +4,8 @@ New in 0.15 released 2013-11-XX:
  * Updated README with current URLs.
  * Added byteswap fix found in Ubuntu, credited Jeremy Kerr and
    Matthias Klose.
+ * Added missing help for -k|--keepgoing option, using patch by Petr
+   Machata found in Fedora.
 
 New in 0.14 released 2011-09-27:
  * Updated debian build rules from the current Debian package.
