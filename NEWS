@@ -1,3 +1,7 @@
+New in 0.15 released 2013-11-XX:
+ * Update config.sub and config.guess from the GNU project to work with
+   newer architectures.  Thanks to isha vishnoi for the heads up.
+
 New in 0.14 released 2011-09-27:
  * Updated debian build rules from the current Debian package.
  * Applied patch from debian to support Hurd and k*BSD.
