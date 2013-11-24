@@ -78,10 +78,13 @@ killrpath(const char *filename)
      }
    for (; dynpos < i; dynpos++)
      {
-       if (is_e32())
+       if (is_e32()) {
         ((Elf32_Dyn *)dyns)[dynpos].d_tag = DT_NULL;
-       else
+        ((Elf32_Dyn *)dyns)[dynpos].d_un.d_val = 0x0;
+       } else {
         ((Elf64_Dyn *)dyns)[dynpos].d_tag = DT_NULL;
+        ((Elf64_Dyn *)dyns)[dynpos].d_un.d_val = 0x0;
+       }
      }
 
    if (lseek(fd, PHDR(p_offset), SEEK_SET) == -1

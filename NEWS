@@ -6,6 +6,9 @@ New in 0.15 released 2013-11-XX:
    Matthias Klose.
  * Added missing help for -k|--keepgoing option, using patch by Petr
    Machata found in Fedora.
+ * Rewrite removal of RPATH/RUNPATH to make sure the entry in .dynamic
+   is a NULL terminated string.  Based on patch found in Fedora
+   credited Axel Thimm and Christian Krause.
 
 New in 0.14 released 2011-09-27:
  * Updated debian build rules from the current Debian package.
