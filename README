@@ -13,7 +13,7 @@ Similar tools:
 --------------
 
 There is elfhack by Ric Klaren doing almost the same thing, and a bit
-more.  <URL:http://wwwhome.cs.utwente.nl/~klaren/software/>.
+more.  <URL: http://wwwhome.cs.utwente.nl/~klaren/software/ >.
 
 License:
 --------
@@ -25,10 +25,9 @@ Source, patches and fixes:
 --------------------------
 
 The latest source is available from
-  <URL:ftp://ftp.hungry.com/pub/hungry/chrpath/>.
+  <URL: https://alioth.debian.org/frs/?group_id=31052 >
 
 The project repository is available from
-<URL:https://alioth.debian.org/projects/chrpath/>
+<URL: https://alioth.debian.org/projects/chrpath/ >
 
-Send patches and updates to Petter Reinholdtsen (check AUTHORS for
-current address).
+Send patches and updates to the Alioth project.
