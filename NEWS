@@ -1,4 +1,4 @@
-New in 0.15 released 2013-11-XX:
+New in 0.15 released 2013-11-24:
  * Updated config.sub and config.guess from the GNU project to work with
    newer architectures.  Thanks to isha vishnoi for the heads up.
  * Updated README with current URLs.
