@@ -16,10 +16,13 @@
 #include <fcntl.h>
 #include "protos.h"
 
-#define EHDR_PS(x) (is_e32() ? DO_SWAPS32(ehdr->e32.x) : DO_SWAPS64(ehdr->e64.x))
-#define PHDR_PS(x) (is_e32() ? DO_SWAPS32(phdr->e32.x) : DO_SWAPS64(phdr->e64.x))
-#define EHDR_PU(x) (is_e32() ? DO_SWAPU32(ehdr->e32.x) : DO_SWAPU64(ehdr->e64.x))
-#define PHDR_PU(x) (is_e32() ? DO_SWAPU32(phdr->e32.x) : DO_SWAPU64(phdr->e64.x))
+#define EHDR_PWS(x) (is_e32() ? DO_SWAPS32(ehdr->e32.x) : DO_SWAPS64(ehdr->e64.x))
+#define EHDR_PHS(x) (is_e32() ? DO_SWAPS16(ehdr->e32.x) : DO_SWAPS16(ehdr->e64.x))
+#define PHDR_PWS(x) (is_e32() ? DO_SWAPS32(phdr->e32.x) : DO_SWAPS64(phdr->e64.x))
+#define EHDR_PWU(x) (is_e32() ? DO_SWAPU32(ehdr->e32.x) : DO_SWAPU64(ehdr->e64.x))
+#define EHDR_PHU(x) (is_e32() ? DO_SWAPU16(ehdr->e32.x) : DO_SWAPU16(ehdr->e64.x))
+#define PHDR_PWU(x) (is_e32() ? DO_SWAPU32(phdr->e32.x) : DO_SWAPU32(phdr->e64.x))
+#define PHDR_POU(x) (is_e32() ? DO_SWAPU32(phdr->e32.x) : DO_SWAPU64(phdr->e64.x))
 
 static int is_e32_flag;
 static int swap_bytes_flag;
@@ -83,10 +86,10 @@ elf_open(const char *filename, int flags, Elf_Ehdr *ehdr)
    }
 
    sz_phdr = is_e32() ? sizeof(Elf32_Phdr) : sizeof(Elf64_Phdr);
-   if (EHDR_PS(e_phentsize) != sz_phdr)
+   if (EHDR_PHS(e_phentsize) != sz_phdr)
    {
      fprintf(stderr, "section size was read as %d, not %d!\n",
-            (int)EHDR_PS(e_phentsize), (int)sz_phdr);
+            (int)EHDR_PHS(e_phentsize), (int)sz_phdr);
      close(fd);
      return -1;
    }
@@ -97,13 +100,13 @@ int
 elf_find_dynamic_section(int fd, Elf_Ehdr *ehdr, Elf_Phdr *phdr)
 {
   int i;
-  if (lseek(fd, EHDR_PU(e_phoff), SEEK_SET) == -1)
+  if (lseek(fd, EHDR_PWU(e_phoff), SEEK_SET) == -1)
   {
     perror ("positioning for sections");
     return 1;
   }
 
-  for (i = 0; i < EHDR_PS(e_phnum); i++)
+  for (i = 0; i < EHDR_PHS(e_phnum); i++)
   {
     const size_t sz_phdr = is_e32() ? sizeof(Elf32_Phdr) : sizeof(Elf64_Phdr);
     if (read(fd, phdr, sz_phdr) != (ssize_t)sz_phdr)
@@ -111,16 +114,16 @@ elf_find_dynamic_section(int fd, Elf_Ehdr *ehdr, Elf_Phdr *phdr)
       perror ("reading section header");
       return 1;
     }
-    if (PHDR_PU(p_type) == PT_DYNAMIC)
+    if (PHDR_PWU(p_type) == PT_DYNAMIC)
       break;
   }
-  if (i == EHDR_PS(e_phnum))
+  if (i == EHDR_PHS(e_phnum))
     {
       fprintf (stderr, "No dynamic section found.\n");
       return 2;
     }
 
-  if (0 == PHDR_PU(p_filesz))
+  if (0 == PHDR_POU(p_filesz))
     {
       fprintf (stderr, "Length of dynamic section is zero.\n");
       return 3;

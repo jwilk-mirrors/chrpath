@@ -124,14 +124,14 @@ chrpath(const char *filename, const char *newpath, int convert)
       return 2;
     }
 
-  if (lseek(fd, EHDRU(e_shoff), SEEK_SET) == -1)
+  if (lseek(fd, EHDRWU(e_shoff), SEEK_SET) == -1)
   {
     perror ("positioning for sections");
     free(dyns);
     return 1;
   }
 
-  for (i = 0; i < EHDRS(e_shnum); i++)
+  for (i = 0; i < EHDRHU(e_shnum); i++)
   {
     const size_t sz_shdr = is_e32() ? sizeof(Elf32_Shdr) : sizeof(Elf64_Shdr);
     if (read(fd, &shdr, sz_shdr) != (ssize_t)sz_shdr)
@@ -140,32 +140,32 @@ chrpath(const char *filename, const char *newpath, int convert)
       free(dyns);
       return 1;
     }
-    if (SHDR(sh_type) == SHT_STRTAB)
+    if (SHDR_W(sh_type) == SHT_STRTAB)
       break;
   }
-  if (i == EHDRS(e_shnum))
+  if (i == EHDRHU(e_shnum))
     {
       fprintf (stderr, "No string table found.\n");
       free(dyns);
       return 2;
     }
-  strtab = (char *)malloc(SHDR(sh_size));
+  strtab = (char *)malloc(SHDR_O(sh_size));
   if (strtab == NULL)
     {
       perror ("allocating memory for string table");
       free(dyns);
       return 1;
     }
-  memset(strtab, 0, SHDR(sh_size));
+  memset(strtab, 0, SHDR_O(sh_size));
 
-  if (lseek(fd, SHDR(sh_offset), SEEK_SET) == -1)
+  if (lseek(fd, SHDR_O(sh_offset), SEEK_SET) == -1)
   {
     perror ("positioning for string table");
     free(strtab);
     free(dyns);
     return 1;
   }
-  if (read(fd, strtab, SHDR(sh_size)) != (int)SHDR(sh_size))
+  if (read(fd, strtab, SHDR_O(sh_size)) != (int)SHDR_O(sh_size))
   {
     perror ("reading string table");
     free(strtab);
@@ -173,7 +173,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     return 1;
   }
 
-  if ((int)SHDR(sh_size) < rpathoff)
+  if ((int)SHDR_O(sh_size) < rpathoff)
   {
     fprintf(stderr, "%s string offset not contained in string table",
             elf_tagname(DYNSS(rpath_dyns_index, d_tag)));
@@ -218,7 +218,7 @@ chrpath(const char *filename, const char *newpath, int convert)
    * Calculate the maximum rpath length (will be equal to rpathlen unless
    * we have previously truncated it).
    */
-  for ( i = rpathoff + rpathlen ; (i < (int)SHDR(sh_size)
+  for ( i = rpathoff + rpathlen ; (i < (int)SHDR_O(sh_size)
                                    && strtab[i] == '\0') ; i++ )
     ;
   i--;
@@ -238,7 +238,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   memset(rpath, 0, rpathlen);
   strcpy(rpath, newpath);
 
-  if (lseek(fd, SHDR(sh_offset)+rpathoff, SEEK_SET) == -1)
+  if (lseek(fd, SHDR_O(sh_offset)+rpathoff, SEEK_SET) == -1)
   {
     perror ("positioning for RPATH");
     free(dyns);

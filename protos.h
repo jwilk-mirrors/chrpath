@@ -33,15 +33,20 @@ typedef union {
 int is_e32(void);
 int swap_bytes(void);
 
+#define DO_SWAPU16(x) ( !swap_bytes() ? x : (uint16_t)bswap_16(x) )
 #define DO_SWAPU32(x) ( !swap_bytes() ? x : (uint32_t)bswap_32(x) )
 #define DO_SWAPU64(x) ( !swap_bytes() ? x : (uint64_t)bswap_64(x) )
+#define DO_SWAPS16(x) ( !swap_bytes() ? x : (int16_t)bswap_16(x) )
 #define DO_SWAPS32(x) ( !swap_bytes() ? x : (int32_t)bswap_32(x) )
 #define DO_SWAPS64(x) ( !swap_bytes() ? x : (int64_t)bswap_64(x) )
 
-#define EHDRS(x) (is_e32() ? DO_SWAPS32(ehdr.e32.x) : DO_SWAPS64(ehdr.e64.x))
-#define EHDRU(x) (is_e32() ? DO_SWAPU32(ehdr.e32.x) : DO_SWAPU64(ehdr.e64.x))
+#define EHDRWS(x) (is_e32() ? DO_SWAPS32(ehdr.e32.x) : DO_SWAPS64(ehdr.e64.x))
+#define EHDRHS(x) (is_e32() ? DO_SWAPS16(ehdr.e32.x) : DO_SWAPS16(ehdr.e64.x))
+#define EHDRWU(x) (is_e32() ? DO_SWAPU32(ehdr.e32.x) : DO_SWAPU64(ehdr.e64.x))
+#define EHDRHU(x) (is_e32() ? DO_SWAPU16(ehdr.e32.x) : DO_SWAPU16(ehdr.e64.x))
 #define PHDR(x) (is_e32() ? DO_SWAPU32(phdr.e32.x) : DO_SWAPU64(phdr.e64.x))
-#define SHDR(x) (is_e32() ? DO_SWAPU32(shdr.e32.x) : DO_SWAPU64(shdr.e64.x))
+#define SHDR_W(x) (is_e32() ? DO_SWAPU32(shdr.e32.x) : DO_SWAPU32(shdr.e64.x))
+#define SHDR_O(x) (is_e32() ? DO_SWAPU32(shdr.e32.x) : DO_SWAPU64(shdr.e64.x))
 #define DYNSU(i,x) (is_e32() ? DO_SWAPU32(((Elf32_Dyn *)dyns)[i].x) \
   : DO_SWAPU64(((Elf64_Dyn *)dyns)[i].x))
 #define DYNSS(i,x) (is_e32() ? DO_SWAPS32(((Elf32_Dyn *)dyns)[i].x) \
