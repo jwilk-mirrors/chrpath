@@ -196,6 +196,7 @@ chrpath(const char *filename, const char *newpath, int convert)
         || write(fd, dyns, PHDR(p_filesz)) != (int)PHDR(p_filesz))
     {
       perror ("converting RPATH to RUNPATH");
+      free(strtab);
       return 1;
     }
     printf("%s: RPATH converted to RUNPATH\n", filename);
