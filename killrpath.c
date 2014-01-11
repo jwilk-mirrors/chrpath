@@ -92,6 +92,7 @@ killrpath(const char *filename)
        || write(fd, dyns, PHDR(p_filesz)) != (int)PHDR(p_filesz))
      {
        perror ("writing dynamic section");
+       free(dyns);
        elf_close(fd);
        return 1;
      }
