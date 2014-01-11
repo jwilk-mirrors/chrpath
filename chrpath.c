@@ -97,6 +97,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   if (dyns == NULL)
     {
       perror ("allocating memory for dynamic section");
+      elf_close(fd);
       return 1;
     }
   memset(dyns, 0, PHDR(p_filesz));
