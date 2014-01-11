@@ -63,6 +63,7 @@ killrpath(const char *filename)
        || read(fd, dyns, PHDR(p_filesz)) != (int)PHDR(p_filesz))
      {
        perror ("reading dynamic section");
+       free(dyns);
        return 1;
      }
 
