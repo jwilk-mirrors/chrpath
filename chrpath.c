@@ -252,6 +252,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     perror ("writing RPATH");
     free(dyns);
     free(strtab);
+    elf_close(fd);
     return 1;
   }
   printf("%s: new %s: %s\n", filename,
