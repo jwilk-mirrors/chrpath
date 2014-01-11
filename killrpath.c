@@ -100,6 +100,7 @@ killrpath(const char *filename)
        return 1;
      }
 
+   free(dyns);
    elf_close(fd);
 
    return 0;
