@@ -89,6 +89,7 @@ chrpath(const char *filename, const char *newpath, int convert)
    if (0 != elf_find_dynamic_section(fd, &ehdr, &phdr))
    {
      perror("found no dynamic section");
+     elf_close(fd);
      return 1;
    }
 
@@ -104,6 +105,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     {
       perror ("reading dynamic section");
       free(dyns);
+      elf_close(fd);
       return 1;
     }
 
@@ -121,6 +123,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     {
       printf("%s: no rpath or runpath tag found.\n", filename);
       free(dyns);
+      elf_close(fd);
       return 2;
     }
 
@@ -128,6 +131,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   {
     perror ("positioning for sections");
     free(dyns);
+    elf_close(fd);
     return 1;
   }
 
@@ -138,6 +142,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     {
       perror ("reading section header");
       free(dyns);
+      elf_close(fd);
       return 1;
     }
     if (SHDR_W(sh_type) == SHT_STRTAB)
@@ -147,6 +152,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     {
       fprintf (stderr, "No string table found.\n");
       free(dyns);
+      elf_close(fd);
       return 2;
     }
   strtab = (char *)malloc(SHDR_O(sh_size));
@@ -154,6 +160,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     {
       perror ("allocating memory for string table");
       free(dyns);
+      elf_close(fd);
       return 1;
     }
   memset(strtab, 0, SHDR_O(sh_size));
@@ -163,6 +170,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     perror ("positioning for string table");
     free(strtab);
     free(dyns);
+    elf_close(fd);
     return 1;
   }
   if (read(fd, strtab, SHDR_O(sh_size)) != (int)SHDR_O(sh_size))
@@ -170,6 +178,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     perror ("reading string table");
     free(strtab);
     free(dyns);
+    elf_close(fd);
     return 1;
   }
 
@@ -179,6 +188,7 @@ chrpath(const char *filename, const char *newpath, int convert)
             elf_tagname(DYNSS(rpath_dyns_index, d_tag)));
     free(strtab);
     free(dyns);
+    elf_close(fd);
     return 5;
   }
   rpath = strtab+rpathoff;
@@ -198,6 +208,7 @@ chrpath(const char *filename, const char *newpath, int convert)
       perror ("converting RPATH to RUNPATH");
       free(strtab);
       free(dyns);
+      elf_close(fd);
       return 1;
     }
     printf("%s: RPATH converted to RUNPATH\n", filename);
@@ -211,6 +222,7 @@ chrpath(const char *filename, const char *newpath, int convert)
   {
     free(dyns);
     free(strtab);
+    elf_close(fd);
     return 0;
   }
 
@@ -234,6 +246,7 @@ chrpath(const char *filename, const char *newpath, int convert)
             newpath, rpathlen);
     free(dyns);
     free(strtab);
+    elf_close(fd);
     return 7;
   }
 
@@ -245,6 +258,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     perror ("positioning for RPATH");
     free(dyns);
     free(strtab);
+    elf_close(fd);
     return 1;
   }
   if (write(fd, rpath, rpathlen) != (int)rpathlen)
