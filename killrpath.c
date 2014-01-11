@@ -49,6 +49,7 @@ killrpath(const char *filename)
    if (0 != elf_find_dynamic_section(fd, &ehdr, &phdr))
    {
      perror("found no dynamic section");
+     elf_close(fd);
      return 1;
    }
 
@@ -56,6 +57,7 @@ killrpath(const char *filename)
    if (dyns == NULL)
      {
        perror ("allocating memory for dynamic section");
+       elf_close(fd);
        return 1;
      }
    memset(dyns, 0, PHDR(p_memsz));
@@ -64,6 +66,7 @@ killrpath(const char *filename)
      {
        perror ("reading dynamic section");
        free(dyns);
+       elf_close(fd);
        return 1;
      }
 
