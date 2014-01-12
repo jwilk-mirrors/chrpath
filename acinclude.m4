@@ -8,7 +8,7 @@ dnl JAPHAR_GREP_CFLAGS(flag, cmd_if_missing, cmd_if_present)
 dnl
 dnl From Japhar.  Report changes to japhar@hungry.com
 dnl
-AC_DEFUN(JAPHAR_GREP_CFLAGS,
+AC_DEFUN([JAPHAR_GREP_CFLAGS],
 [case "$CFLAGS" in
 "$1" | "$1 "* | *" $1" | *" $1 "* )
   ifelse($#, 3, [$3], [:])
@@ -19,7 +19,7 @@ AC_DEFUN(JAPHAR_GREP_CFLAGS,
 esac
 ])
 
-AC_DEFUN(CHRPATH_LDRPATH_OPTION,
+AC_DEFUN([CHRPATH_LDRPATH_OPTION],
 [AC_REQUIRE([AC_CANONICAL_TARGET])[]dnl
 case "$target" in
 	*-linux*|*-gnu*|*-k*bsd*-gnu)
