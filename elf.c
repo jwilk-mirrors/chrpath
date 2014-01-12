@@ -86,10 +86,10 @@ elf_open(const char *filename, int flags, Elf_Ehdr *ehdr)
    }
 
    sz_phdr = is_e32() ? sizeof(Elf32_Phdr) : sizeof(Elf64_Phdr);
-   if (EHDR_PHS(e_phentsize) != sz_phdr)
+   if ((size_t)EHDR_PHS(e_phentsize) != sz_phdr)
    {
-     fprintf(stderr, "section size was read as %d, not %d!\n",
-            (int)EHDR_PHS(e_phentsize), (int)sz_phdr);
+     fprintf(stderr, "section size was read as %zd, not %zd!\n",
+            (size_t)EHDR_PHS(e_phentsize), sz_phdr);
      close(fd);
      return -1;
    }
