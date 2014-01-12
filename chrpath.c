@@ -102,7 +102,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     }
   memset(dyns, 0, PHDR(p_filesz));
   if (lseek(fd, PHDR(p_offset), SEEK_SET) == -1
-      || read(fd, dyns, PHDR(p_filesz)) != (int)PHDR(p_filesz))
+      || read(fd, dyns, PHDR(p_filesz)) != (ssize_t)PHDR(p_filesz))
     {
       perror ("reading dynamic section");
       free(dyns);
@@ -174,7 +174,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     elf_close(fd);
     return 1;
   }
-  if (read(fd, strtab, SHDR_O(sh_size)) != (int)SHDR_O(sh_size))
+  if (read(fd, strtab, SHDR_O(sh_size)) != (ssize_t)SHDR_O(sh_size))
   {
     perror ("reading string table");
     free(strtab);

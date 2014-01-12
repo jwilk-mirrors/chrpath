@@ -62,7 +62,7 @@ killrpath(const char *filename)
      }
    memset(dyns, 0, PHDR(p_memsz));
    if (lseek(fd, PHDR(p_offset), SEEK_SET) == -1
-       || read(fd, dyns, PHDR(p_filesz)) != (int)PHDR(p_filesz))
+       || read(fd, dyns, PHDR(p_filesz)) != (ssize_t)PHDR(p_filesz))
      {
        perror ("reading dynamic section");
        free(dyns);
