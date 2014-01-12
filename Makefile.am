@@ -20,6 +20,10 @@ chrpath_SOURCES = \
 
 EXTRA_DIST = $(man_MANS)
 
+config-updates:
+	GET 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' > config.guess
+	GET 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' > config.sub
+
 CLEANFILES = *.bb *.bbg *.da *.gcov testsuite/*.bb testsuite/*.bbg
 coverage: all check
 	for f in *.c; do gcov $$f; done
