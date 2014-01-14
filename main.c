@@ -111,6 +111,7 @@ main(int argc, char * const argv[])
         break;
       default:
         printf("Invalid argument '%c'\n", opt);
+	/* Fall through */
       case 'h':
         usage(argv[0]);
         exit(0);
