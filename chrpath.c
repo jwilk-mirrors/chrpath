@@ -157,7 +157,7 @@ chrpath(const char *filename, const char *newpath, int convert)
       return 2;
     }
   /* +1 for forced trailing null */
-  strtab = (char *)malloc(SHDR_O(sh_size)+1);
+  strtab = (char *)calloc(1, SHDR_O(sh_size)+1);
   if (strtab == NULL)
     {
       perror ("allocating memory for string table");
@@ -165,7 +165,6 @@ chrpath(const char *filename, const char *newpath, int convert)
       elf_close(fd);
       return 1;
     }
-  memset(strtab, 0, SHDR_O(sh_size)+1);
 
   if (lseek(fd, SHDR_O(sh_offset), SEEK_SET) == -1)
   {
@@ -183,6 +182,7 @@ chrpath(const char *filename, const char *newpath, int convert)
     elf_close(fd);
     return 1;
   }
+  strtab[SHDR_O(sh_size)] = 0; /* make sure printed string is null terminated */
 
   if ((int)SHDR_O(sh_size) < rpathoff)
   {
