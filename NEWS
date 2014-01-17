@@ -1,3 +1,7 @@
+New in 0.17 released 2014-XX-XX:
+ * Add Solaris support (use <sys/byteorder.h> instead of <byteswap.h>).
+   Patch from Rainer Orth.
+
 New in 0.16 released 2014-01-14:
  * Fixed all minor bugs discovered by Coverity.
  * Updated config.sub and config.guess from the GNU project.

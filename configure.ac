@@ -21,7 +21,7 @@ dnl Checks for libraries.
 
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([getopt.h elf.h fcntl.h unistd.h link.h sys/link.h])
+AC_CHECK_HEADERS([getopt.h elf.h fcntl.h unistd.h link.h sys/link.h byteswap.h sys/byteorder.h])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

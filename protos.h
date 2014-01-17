@@ -1,7 +1,14 @@
 #ifndef PROTOS_H
 #define PROTOS_H
 
+#ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
+#elif defined(HAVE_SYS_BYTEORDER_H)
+#include <sys/byteorder.h>
+#define bswap_16 BSWAP_16
+#define bswap_32 BSWAP_32
+#define bswap_64 BSWAP_64
+#endif
 #include <elf.h>
 #include "config.h"
 
